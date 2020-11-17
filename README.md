@@ -23,7 +23,7 @@ None
 ### Intermediate files
 
  * 1 gene IDs file: `gene_ids.csv`, 
-   created by `create_gene_ids.sh`,
+   created by `create_gene_ids.R`,
    a tibble with one column `gene_id`
 
 ```
