@@ -25,7 +25,11 @@ for (i in seq_len(nrow(t))) {
     snp_id = ncbi::get_snp_ids_from_gene_name(gene_name)
   )
   testthat::expect_true("snp_id" %in% names(t_here))
-  readr::write_csv(x = t_here, file = filename)
+  if (nrow(t_here) > 0) {
+    readr::write_csv(x = t_here, file = filename)
+  } else {
+    file.create(filename)
+  }
   testthat::expect_true(file.exists(filename))
 }
 

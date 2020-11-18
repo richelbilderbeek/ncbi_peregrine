@@ -56,7 +56,7 @@ gene_id|gene_name
 
 #### `[gene_name]_snps.csv`
 
-per gene name, a file named `[gene_name]_snps.sh`,
+per gene name, a file named `[gene_name]_snps.csv`,
 created by `create_gene_name_snps.R`,
 each a tibble with one column `snp_id`.
 
@@ -75,6 +75,13 @@ snp_id
 
 
 #### `[gene_name]_variations.csv`
+
+Per `[gene_name]_snps.csv`, a file named `[gene_name]_variations.csv`,
+created by `create_snp_variations.R`,
+each a tibble with two columns: `snp_id` and `variation`.
+
+When all `[gene_name]_variation.csv` files are created,
+the file `create_snp_variations_is_done.txt`
 
 snp_id    |variation              
 ----------|-----------------------
