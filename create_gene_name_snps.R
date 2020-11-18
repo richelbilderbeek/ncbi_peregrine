@@ -21,7 +21,9 @@ for (i in seq_len(nrow(t))) {
   filename <- t$filename[i]
   if (file.exists(filename)) next
   gene_name <- t$gene_name[i]
-  t_here <- ncbi::get_gene_name_snps(gene_name)
+  t_here <- tibble::tibble(
+    snp_id = ncbi::get_snp_ids_from_gene_name(gene_name)
+  )
   testthat::expect_true("snp_id" %in% names(t_here))
   readr::write_csv(x = t_here, file = filename)
   testthat::expect_true(file.exists(filename))
