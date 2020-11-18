@@ -8,7 +8,7 @@ t <- readr::read_csv(
 
 testthat::expect_true("gene_id" %in% names(t))
 testthat::expect_true("gene_name" %in% names(t))
-t$filename <- paste0(t$gene_id, ".csv")
+t$filename <- paste0(t$gene_id, "_snps.csv")
 
 if (!all(file.exists(t$filename))) {
   if (file.exists("create_gene_name_snps_is_done.txt")) {

@@ -40,3 +40,4 @@ vignettes/*.pdf
 gene_ids.csv
 .Rproj.user
 gene_names.csv
+*.csv
