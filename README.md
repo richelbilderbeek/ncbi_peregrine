@@ -22,6 +22,8 @@ None
 
 ### Intermediate files
 
+#### `gene_ids.csv`
+
  * 1 gene IDs file: `gene_ids.csv`, 
    created by `create_gene_ids.R`,
    a tibble with one column `gene_id`
@@ -37,9 +39,11 @@ gene_id
 3586
 ```
 
- * 1 gene IDs file: `gene_names.csv`, 
-   created by `create_gene_names.sh`,
-   a tibble with two columns `gene_id` and `gene_name`
+#### `gene_names.csv`
+
+1 gene IDs file: `gene_names.csv`, 
+created by `create_gene_names.R`,
+a tibble with two columns `gene_id` and `gene_name`
 
 gene_id|gene_name
 -------|----------
@@ -50,10 +54,46 @@ gene_id|gene_name
 3091   |HIF1A
 3586   |IL10
 
+#### `[gene_name]_snps.csv`
+
+per gene name, a file named `[gene_name]_snps.sh`,
+created by `create_gene_name_snps.R`,
+each a tibble with one column `snp_id`.
+
+When all `[gene_name]_snps.csv` files are created,
+the file `create_gene_name_snps_is_done.txt`
+
+
+```
+snp_id    
+----------
+1583049783
+...       
+```
+
+
+
+
+#### `[gene_name]_variations.csv`
+
+snp_id    |variation              
+----------|-----------------------
+1583049783|NP_000585.2:p.Gly144Asp
+...       |...                    
+
+
+#### `[gene_name]_topology.csv`
+
+variation              |is_in_tmh
+-----------------------|---------
+NP_000585.2:p.Gly144Asp|FALSE
+
+
 ### Raw output files
 
  * 1123 gene ID results file, e.g. `7124.csv`, 
-   created on a per-job basis by `create_gene_id_results.sh 7124`,
+   created on a per-job basis by `create_gene_id_results.sh 7124`
+   as requested by `create_results.R`,
    a tibble with column names `gene_id` (equals the filename),
    `gene_name` (all values identical), `snp_id`, `variation`, `is_in_tmh`
 
