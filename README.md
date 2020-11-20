@@ -71,17 +71,47 @@ snp_id
 ...       
 ```
 
+#### `[gene_name]_variations.rds`
 
+Per `[gene_name]_snps.csv`, a file named `[gene_name]_variations.rds`,
+created by `create_snp_variations_rds.R`,
+each list of tibbles with two columns: `snp_id` and `variation`.
+Each tibble can have zero to dozens of rows.
 
+When all `[gene_name]_variation.csv` files are created,
+the file `create_snp_variations_rds_is_done.txt`
+
+```
+[[1]]
+# A tibble: 0 x 2
+# ... with 2 variables: snp_id <dbl>, variation <chr>
+
+[[2]]
+# A tibble: 1 x 2
+      snp_id variation              
+       <dbl> <chr>                  
+1 1599031008 NP_001156469.1:p.Val35=
+
+[[4]]
+# A tibble: 2 x 2
+      snp_id variation                
+       <dbl> <chr>                    
+1 1599030856 NP_001156469.1:p.Trp20Arg
+2 1599030856 NP_001156469.1:p.Trp20Cys
+
+[[15]]
+# A tibble: 0 x 2
+# ... with 2 variables: snp_id <dbl>, variation <chr>
+```
 
 #### `[gene_name]_variations.csv`
 
-Per `[gene_name]_snps.csv`, a file named `[gene_name]_variations.csv`,
-created by `create_snp_variations.R`,
+Per `[gene_name]_variations.rds`, a file named `[gene_name]_variations.csv`,
+created by `create_snp_variations_csv.R`,
 each a tibble with two columns: `snp_id` and `variation`.
 
 When all `[gene_name]_variation.csv` files are created,
-the file `create_snp_variations_is_done.txt`
+the file `create_snp_variations_csv_is_done.txt`
 
 snp_id    |variation              
 ----------|-----------------------
