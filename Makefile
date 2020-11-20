@@ -1,4 +1,4 @@
-all: create_snp_variations_is_done.txt
+all: create_snp_variations_rds_is_done.txt
 
 gene_ids.csv:
 	Rscript create_gene_ids.R
