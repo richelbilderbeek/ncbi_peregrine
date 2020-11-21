@@ -20,11 +20,10 @@ for (i in seq_len(nrow(t))) {
 
 # Per gene name, read its SNPs and save the variations
 for (i in seq_len(nrow(t))) {
-  message("i: ", i)
 
   # The gene
   gene_name <- t$gene_name[i]
-  message("gene_name: ", gene_name)
+  message(i, "/", nrow(t), ": ", gene_name)
 
   # The SNPs working on that gene that we already know
   snps_filename <- stringr::str_replace(t$filename[i], pattern = "_variations\\.rds", replacement = "_snps.csv")
@@ -42,16 +41,18 @@ for (i in seq_len(nrow(t))) {
   tibbles <- readRDS(rds_filename)
   if (length(tibbles) == nrow(t_snp_ids) &&
       tibble::is_tibble(tail(tibbles, n = 1))) {
-    message("Already done with all this gene's SNPs")
     next
   }
 
   # Per SNP, obtain the variation
   # Save to file after each SNP
   for (j in seq_len(nrow(t_snp_ids))) {
-    message("j: ", j)
+    if (j <= length(tibbles)) {
+      testthat::expect_true(tibble::is_tibble(tibbles[[j]]))
+      next
+    }
     snp_id <- t_snp_ids$snp_id[j]
-    message("snp_id: ", snp_id)
+    message(j, "/", nrow(t_snp_ids), ": ", snp_id)
     variations <- ncbi::get_snp_variations_in_protein_from_snp_id(snp_id)
     tibbles[[j]] <- tibble::tibble(
       snp_id = snp_id,
