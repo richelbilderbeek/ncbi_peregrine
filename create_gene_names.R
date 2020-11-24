@@ -1,4 +1,9 @@
-gene_ids <- readr::read_csv("gene_ids.csv")
+gene_ids <- readr::read_csv(
+  "gene_ids.csv",
+  col_types = readr::cols(
+    gene_id = readr::col_double()
+  )
+)
 
 t <- tibble::tibble(
   gene_id = gene_ids$gene_id,

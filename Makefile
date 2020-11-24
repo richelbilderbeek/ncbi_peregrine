@@ -12,3 +12,5 @@ create_gene_name_snps_is_done.txt: gene_names.csv
 create_snp_variations_rds_is_done.txt: create_gene_name_snps_is_done.txt
 	Rscript create_snp_variations_rds.R
 
+clean:
+	rm *.csv *.txt *.rds
