@@ -21,47 +21,46 @@ for (i in seq_len(nrow(t))) {
 # Per i'th gene name, read its j'th SNPs and save the variations
 
 j <- 1
-for (i in seq_len(nrow(t))) {
+for (j in seq(1, 10)) {
+  for (i in seq_len(nrow(t))) {
 
-  # The gene
-  gene_name <- t$gene_name[i]
-  message(i, "/", nrow(t), ": ", gene_name, " for the ", j, "th SNP")
+    # The gene
+    gene_name <- t$gene_name[i]
+    message(i, "/", nrow(t), ": ", gene_name, " for the ", j, "th SNP")
 
-  # The SNPs working on that gene that we already know
-  snps_filename <- stringr::str_replace(t$filename[i], pattern = "_variations\\.rds", replacement = "_snps.csv")
-  testthat::expect_true(file.exists(snps_filename))
-  t_snp_ids <- readr::read_csv(
-    snps_filename,
-    col_types = readr::cols(
-      snp_id = readr::col_double()
+    # The SNPs working on that gene that we already know
+    snps_filename <- stringr::str_replace(t$filename[i], pattern = "_variations\\.rds", replacement = "_snps.csv")
+    testthat::expect_true(file.exists(snps_filename))
+    t_snp_ids <- readr::read_csv(
+      snps_filename,
+      col_types = readr::cols(
+        snp_id = readr::col_double()
+      )
     )
-  )
 
-  # The variations we're about to obtain
-  rds_filename <- t$filename[i] # To save the variations to, may be half done
-  testthat::expect_true(file.exists(rds_filename))
-  tibbles <- readRDS(rds_filename)
-  if (length(tibbles) == nrow(t_snp_ids) &&
-      tibble::is_tibble(tail(tibbles, n = 1))) {
-    next
+    # The variations we're about to obtain
+    rds_filename <- t$filename[i] # To save the variations to, may be half done
+    testthat::expect_true(file.exists(rds_filename))
+    tibbles <- readRDS(rds_filename)
+    if (length(tibbles) == nrow(t_snp_ids) &&
+        tibble::is_tibble(tail(tibbles, n = 1))) {
+      next
+    }
+
+    # Per SNP, obtain the variation
+    # Save to file after each SNP
+    if (j <= length(tibbles)) {
+      testthat::expect_true(tibble::is_tibble(tibbles[[j]]))
+      next
+    }
+    snp_id <- t_snp_ids$snp_id[j]
+    variations <- ncbi::get_snp_variations_in_protein_from_snp_id(snp_id)
+    tibbles[[j]] <- tibble::tibble(
+      snp_id = snp_id,
+      variation = variations,
+    )
+    saveRDS(object = tibbles, file = rds_filename)
   }
-
-  # Per SNP, obtain the variation
-  # Save to file after each SNP
-  if (j <= length(tibbles)) {
-    testthat::expect_true(tibble::is_tibble(tibbles[[j]]))
-    next
-  }
-  snp_id <- t_snp_ids$snp_id[j]
-  variations <- ncbi::get_snp_variations_in_protein_from_snp_id(snp_id)
-  tibbles[[j]] <- tibble::tibble(
-    snp_id = snp_id,
-    variation = variations,
-  )
-  saveRDS(object = tibbles, file = rds_filename)
-  j <- j + 1
-
-  if (j == 11) break
 }
 
 readr::write_lines(
