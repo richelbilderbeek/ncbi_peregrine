@@ -60,9 +60,10 @@ for (i in seq_len(nrow(t))) {
   )
   saveRDS(object = tibbles, file = rds_filename)
   j <- j + 1
+
+  if (j == 11) break
 }
 
-# This will approximately never happen
 readr::write_lines(
   x = Sys.time(),
   file = "create_snp_variations_rds_is_done.txt"
