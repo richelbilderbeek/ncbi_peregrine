@@ -22,7 +22,7 @@ None
 
 ### Intermediate files
 
-#### `gene_ids.csv`
+#### :heavy_check_mark: `gene_ids.csv`
 
  * 1 gene IDs file: `gene_ids.csv`, 
    created by `create_gene_ids.R`,
@@ -39,7 +39,7 @@ gene_id
 3586
 ```
 
-#### `gene_names.csv`
+#### :heavy_check_mark: `gene_names.csv`
 
 1 gene IDs file: `gene_names.csv`, 
 created by `create_gene_names.R`,
@@ -54,7 +54,7 @@ gene_id|gene_name
 3091   |HIF1A
 3586   |IL10
 
-#### `[gene_name]_snps.csv`
+#### :heavy_check_mark: `[gene_name]_snps.csv`
 
 per gene name, a file named `[gene_name]_snps.csv`,
 created by `create_gene_name_snps.R`,
@@ -71,7 +71,7 @@ snp_id
 ...       
 ```
 
-#### `[gene_name]_variations.rds`
+#### :white_check_mark: `[gene_name]_variations.rds`
 
 Per `[gene_name]_snps.csv`, a file named `[gene_name]_variations.rds`,
 created by `create_snp_variations_rds.R`,
@@ -104,7 +104,7 @@ the file `create_snp_variations_rds_is_done.txt`
 # ... with 2 variables: snp_id <dbl>, variation <chr>
 ```
 
-#### `[gene_name]_variations.csv`
+#### :white_check_mark: `[gene_name]_variations.csv`
 
 Per `[gene_name]_variations.rds`, a file named `[gene_name]_variations.csv`,
 created by `create_snp_variations_csv.R`,
