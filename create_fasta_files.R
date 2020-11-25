@@ -53,5 +53,5 @@ for (i in seq_len(nrow(t))) {
 
 readr::write_lines(
   x = Sys.time(),
-  file = "create_snp_variations_csv_is_done.txt"
+  file = "create_fasta_files_is_done.txt"
 )

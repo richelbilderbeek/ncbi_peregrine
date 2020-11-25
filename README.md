@@ -147,6 +147,23 @@ NP_001123995.1:p.Val769Gly
 NP_001229820.1:p.Val800Gly 
 ```
 
+#### `[gene_name].topo`
+
+The script `create_topo_files.R`,
+per gene name, reads the `[gene_name].fasta` file,
+and creates a file `[gene_name].topo` with the topology 
+of these proteins.
+
+When all `[gene_name].topo` files are created,
+the file `create_topo_files_is_done.txt`
+
+```
+> NP_001007554.1
+0000000110000
+> NP_001229821.1
+0000000000000
+```
+
 #### :white_check_mark: `[gene_name]_topology.csv`
 
 variation              |is_in_tmh
