@@ -43,3 +43,5 @@ gene_names.csv
 *.csv
 *.rds
 *.txt
+*.fasta
+*.topo
