@@ -104,7 +104,7 @@ the file `create_snp_variations_rds_is_done.txt`
 # ... with 2 variables: snp_id <dbl>, variation <chr>
 ```
 
-#### :white_check_mark: `[gene_name]_variations.csv`
+#### :heavy_check_mark: `[gene_name]_variations.csv`
 
 Per `[gene_name]_variations.rds`, a file named `[gene_name]_variations.csv`,
 created by `create_snp_variations_csv.R`,
@@ -118,13 +118,42 @@ snp_id    |variation
 1583049783|NP_000585.2:p.Gly144Asp
 ...       |...                    
 
+#### `[gene_name].fasta`
 
-#### `[gene_name]_topology.csv`
+The script `create_fasta_files.R`,
+per gene name, reads the `[gene_name]_variation.csv` file,
+and creates a file `[gene_name].fasta` with all the variation'
+proteins' sequences.
+
+When all `[gene_name].fasta` files are created,
+the file `create_fasta_files_is_done.txt`
+
+```
+> NP_001007554.1
+FANTASTICALLY
+> NP_001229821.1
+FAMILYVW
+```
+
+For example, `https://www.ncbi.nlm.nih.gov/snp/rs1570884790` is a SNP that
+works on multiple proteins:
+
+```
+NP_001007554.1:p.Val754Gly
+NP_001229821.1:p.Val754Gly
+NP_009089.4:p.Val723Gly
+NP_001229822.1:p.Val723Gly
+NP_001123995.1:p.Val769Gly
+NP_001229820.1:p.Val800Gly 
+```
+
+#### :white_check_mark: `[gene_name]_topology.csv`
 
 variation              |is_in_tmh
 -----------------------|---------
 NP_000585.2:p.Gly144Asp|FALSE
 
+TODO
 
 ### Raw output files
 
