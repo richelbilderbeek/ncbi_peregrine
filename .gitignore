@@ -45,3 +45,4 @@ gene_names.csv
 *.txt
 *.fasta
 *.topo
+*.log
