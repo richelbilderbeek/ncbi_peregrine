@@ -34,9 +34,10 @@ for (i in seq_len(nrow(t))) {
     ),
     sequence = NA
   )
-  sequences <- ncbi::fetch_sequence_from_protein_id(
+  sequences <- ncbi::fetch_sequences_from_protein_ids(
     t_sequences$protein_id
   )
+  nchar(sequences)
   # Note that 'names(sequences)' contains the full names again
   t_sequences$sequence <- sequences
 
