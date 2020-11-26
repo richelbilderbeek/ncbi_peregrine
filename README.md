@@ -164,36 +164,27 @@ the file `create_topo_files_is_done.txt`
 0000000000000
 ```
 
-#### :white_check_mark: `[gene_name]_topology.csv`
+#### :white_check_mark: `[gene_name]_is_in_tmh.csv`
 
-variation              |is_in_tmh
------------------------|---------
-NP_000585.2:p.Gly144Asp|FALSE
+Per gene name, reads the `[gene_name]_variation.csv` 
+and `[gene_name].topo` file. 
+For each variation, it tallies if the variation is in a TMH,
+as well as the proportion of TMH in the protein. 
+done by script `create_is_in_tmh_files.R`
 
-TODO
-
-### Raw output files
-
- * 1123 gene ID results file, e.g. `7124.csv`, 
-   created on a per-job basis by `create_gene_id_results.sh 7124`
-   as requested by `create_results.R`,
-   a tibble with column names `gene_id` (equals the filename),
-   `gene_name` (all values identical), `snp_id`, `variation`, `is_in_tmh`
-
-snp_id    |variation              |is_in_tmh
-----------|-----------------------|---------
-1583049783|NP_000585.2:p.Gly144Asp|FALSE
-...       |...                    |...
+variation              |is_in_tmh|p_in_tmh
+-----------------------|---------|--------
+NP_000585.2:p.Gly144Asp|FALSE    |0.123   
 
 ### Results files
 
  * All raw output files in one table, `results.csv`,
    created by `create_results.sh`
 
-gene_id|gene_name|snp_id    |variation              |is_in_tmh
--------|---------|----------|-----------------------|---------
-7124   |TNF      |1583049783|NP_000585.2:p.Gly144Asp|FALSE
-...    |...      |...       |...                    |...
+gene_id|gene_name|snp_id    |variation              |is_in_tmh|p_in_tmh
+-------|---------|----------|-----------------------|---------|--------
+7124   |TNF      |1583049783|NP_000585.2:p.Gly144Asp|FALSE    |0.123
+...    |...      |...       |...                    |...      |...
 
 ## Estimated time
 

@@ -10,6 +10,7 @@ testthat::expect_true("gene_name" %in% names(t))
 t$csv_filename <- paste0(t$gene_id, "_variations.csv")
 t$fasta_filename <- paste0(t$gene_id, ".fasta")
 
+# i <- 1
 # i <- 67
 for (i in seq_len(nrow(t))) {
 
@@ -28,27 +29,32 @@ for (i in seq_len(nrow(t))) {
       variation = readr::col_character()
     )
   )
+  # There may be duplicates in 'protein_id'
+  # These are kept, to ensure tables have the same number of rows
   t_sequences <- tibble::tibble(
-    protein_id = unique(
-      ncbi::extract_protein_ids_from_variations(t_variations$variation)
+    protein_id = ncbi::extract_protein_ids_from_variations(
+      t_variations$variation
     ),
     sequence = NA
   )
-  sequences <- ncbi::fetch_sequences_from_protein_ids(
-    t_sequences$protein_id
-  )
-  nchar(sequences)
-  # Note that 'names(sequences)' contains the full names again
-  t_sequences$sequence <- sequences
+  testthat::expect_equal(nrow(t_variations), nrow(t_sequences))
+  if (nrow(t_sequences) > 0) {
+    sequences <- ncbi::fetch_sequences_from_protein_ids(
+      t_sequences$protein_id
+    )
+    testthat::expect_equal(length(t_sequences$protein_id), length(sequences))
+    # Note that 'names(sequences)' contains the full names again
+    t_sequences$sequence <- sequences
 
-  # Convert to FASTA file
-  fasta_text <- rep(NA, nrow(t_sequences) * 2)
-  fasta_text[seq(1, (nrow(t_sequences) * 2) - 1, by = 2)] <-
-    paste0(">", t_sequences$protein_id)
-  fasta_text[seq(2, (nrow(t_sequences) * 2) - 0, by = 2)] <-
-    t_sequences$sequence
-  testthat::expect_true(all(!is.na(fasta_text)))
-  readr::write_lines(x = fasta_text, file = t$fasta_filename[i])
+    # Convert to FASTA file
+    pureseqtmr::save_tibble_as_fasta_file(
+      t = t_sequences,
+      fasta_filename = t$fasta_filename[i]
+    )
+  } else {
+    # Create an empty file
+    readr::write_lines(x = c(), t$fasta_filename[i])
+  }
   testthat::expect_true(file.exists(t$fasta_filename[i]))
 }
 

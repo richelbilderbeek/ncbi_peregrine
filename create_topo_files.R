@@ -10,6 +10,7 @@ testthat::expect_true("gene_name" %in% names(t))
 t$fasta_filename <- paste0(t$gene_id, ".fasta")
 t$topo_filename <- paste0(t$gene_id, ".topo")
 
+# i <- 1
 # i <- 67
 for (i in seq_len(nrow(t))) {
 
@@ -21,7 +22,6 @@ for (i in seq_len(nrow(t))) {
   fasta_filename <- t$fasta_filename[i]
   testthat::expect_true(file.exists(fasta_filename))
   t_fasta  <- pureseqtmr::load_fasta_file_as_tibble(fasta_filename)
-  nchar(t_fasta$sequence)
 
   # Predict the topology
   t_topology <- pureseqtmr::predict_topology(fasta_filename = fasta_filename)
@@ -36,14 +36,6 @@ for (i in seq_len(nrow(t))) {
     fasta_filename = t$topo_filename[i]
   )
   testthat::expect_true(file.exists(t$topo_filename[i]))
-
-  t_topology_again <- pureseqtmr::load_fasta_file_as_tibble(fasta_filename)
-  nchar(t_topology_again$sequence)
-
-  testthat::expect_equal(
-    nchar(t_topology$topology),
-    nchar(t_topology_again$sequence)
-  )
 }
 
 readr::write_lines(
