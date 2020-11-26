@@ -18,5 +18,8 @@ module load R
 while (true)
 do 
   echo "make $@"
+  echo $(date)
   make "$@"
+  sleep 60
 done
+
