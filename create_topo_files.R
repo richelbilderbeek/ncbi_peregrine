@@ -11,6 +11,7 @@ t$fasta_filename <- paste0(t$gene_id, ".fasta")
 t$topo_filename <- paste0(t$gene_id, ".topo")
 
 # i <- 1
+# i <- 14
 # i <- 67
 for (i in seq_len(nrow(t))) {
 
