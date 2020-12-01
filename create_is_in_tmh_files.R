@@ -35,33 +35,42 @@ for (i in seq_len(nrow(t))) {
   t_topo  <- pureseqtmr::load_fasta_file_as_tibble(topo_filename)
   testthat::expect_equal(nrow(t_variations), nrow(t_topo))
 
-  # Score
-  t_is_in_tmh <- tibble::tibble(
-    variation = t_variations$variation,
-    is_in_tmh = NA,
-    p_in_tmh = NA
-  )
-
-  # Determine in_in_tmh
-  for (variation_index in seq(1, nrow(t_is_in_tmh))) {
-    this_variation <- ncbi::parse_hgvs(
-      t_variations$variation[variation_index]
+  if (nrow(t_topo) == 0) {
+    t_is_in_tmh <- tibble::tibble(
+      variation = character(0),
+      is_in_tmh = logical(0),
+      p_in_tmh = double(0)
     )
-    if (this_variation$from != this_variation$to) {
-      pos <- this_variation$pos
-      t_is_in_tmh$is_in_tmh[variation_index] <- "1" == stringr::str_sub(
-        t_topo$sequence[variation_index], pos, pos)
+
+  } else {
+
+    # Score
+    t_is_in_tmh <- tibble::tibble(
+      variation = t_variations$variation,
+      is_in_tmh = NA,
+      p_in_tmh = NA
+    )
+
+    # Determine in_in_tmh
+    for (variation_index in seq(1, nrow(t_is_in_tmh))) {
+      this_variation <- ncbi::parse_hgvs(
+        t_variations$variation[variation_index]
+      )
+      if (this_variation$from != this_variation$to) {
+        pos <- this_variation$pos
+        t_is_in_tmh$is_in_tmh[variation_index] <- "1" == stringr::str_sub(
+          t_topo$sequence[variation_index], pos, pos)
+      }
     }
+
+    # Determine p_in_tmh
+    t_is_in_tmh$p_in_tmh <- stringr::str_count(t_topo$sequence, "1") /
+        nchar(t_topo$sequence)
   }
-
-  # Determine p_in_tmh
-  t_is_in_tmh$p_in_tmh <- stringr::str_count(t_topo$sequence, "1") /
-      nchar(t_topo$sequence)
-
   # Save
   readr::write_csv(
     x = t_is_in_tmh,
-    file = t$is_in_tmh_filename
+    file = t$is_in_tmh_filename[i]
   )
   testthat::expect_true(file.exists(t$is_in_tmh_filename[i]))
 }
