@@ -30,4 +30,4 @@ results.csv: create_is_in_tmh_files_is_done.txt
 	Rscript create_results.R
 
 clean:
-	rm *.csv *.txt *.rds *.fasta *.topo
+	rm *.csv *.txt *.rds *.fasta *.topo *.log
