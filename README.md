@@ -186,6 +186,20 @@ gene_id|gene_name|snp_id    |variation              |is_in_tmh|p_in_tmh
 7124   |TNF      |1583049783|NP_000585.2:p.Gly144Asp|FALSE    |0.123
 ...    |...      |...       |...                    |...      |...
 
+
+```
+|----------------|
+  gene_names.csv
+
+                 |----------|
+                 [gene_name]_snps.csv
+
+                 |----------------------------------|
+                      [gene_name]_variations.csv
+
+                            |------------------------------------------|
+                                     [gene_name]_is_in_tmh.csv
+```
 ## Estimated time
 
  * 8 seconds per gene ID, 
