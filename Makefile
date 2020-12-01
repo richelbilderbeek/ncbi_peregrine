@@ -1,4 +1,4 @@
-all: create_is_in_tmh_files_is_done.txt
+all: results.csv
 
 gene_ids.csv:
 	Rscript create_gene_ids.R
@@ -25,6 +25,9 @@ create_topo_files_is_done.txt: create_fasta_files_is_done.txt
 
 create_is_in_tmh_files_is_done.txt: create_topo_files_is_done.txt
 	Rscript create_is_in_tmh_files.R
+
+results.csv: create_is_in_tmh_files_is_done.txt
+	Rscript create_results.R
 
 clean:
 	rm *.csv *.txt *.rds
