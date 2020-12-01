@@ -19,6 +19,11 @@ t$is_in_tmh_filename <- paste0(t$gene_id, "_is_in_tmh.csv")
 
 # i <- 398
 # NP_001172112.1:p.Arg249delinsThrGluArgTer
+
+# i <- 762
+# NP_001180552.1:p.Pro27del
+
+
 for (i in seq_len(nrow(t))) {
 
   # The gene
@@ -75,7 +80,7 @@ for (i in seq_len(nrow(t))) {
         }
       }, error = function(e) {
           # Valid reasons to skip
-          testthat::expect_match(e$message, "Do no accept (frame shifts|extensions|insertions|delins)")
+          testthat::expect_match(e$message, "Do no accept (frame shifts|extensions|insertions|deletions|delins)")
         }
       )
     }
