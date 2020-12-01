@@ -11,7 +11,14 @@ t$topo_filename <- paste0(t$gene_id, ".topo")
 t$variations_filename <- paste0(t$gene_id, "_variations.csv")
 t$is_in_tmh_filename <- paste0(t$gene_id, "_is_in_tmh.csv")
 
-# i <- 67
+# i <- 201
+# variation will be a frame shift
+
+# i <- 210
+# variation will be NP_068743.3:p.Ter846TyrextTer?
+
+# i <- 398
+# NP_001172112.1:p.Arg249delinsThrGluArgTer
 for (i in seq_len(nrow(t))) {
 
   # The gene
@@ -53,19 +60,25 @@ for (i in seq_len(nrow(t))) {
 
     # Determine in_in_tmh
     for (variation_index in seq(1, nrow(t_is_in_tmh))) {
-      this_variation <- ncbi::parse_hgvs(
-        t_variations$variation[variation_index]
+      message(variation_index, "/", nrow(t_is_in_tmh), ": ",  t_variations$variation[variation_index])
+      tryCatch({
+        this_variation <- ncbi::parse_hgvs(
+          t_variations$variation[variation_index]
+        )
+        if (this_variation$from != this_variation$to) {
+          pos <- this_variation$pos
+          t_is_in_tmh$is_in_tmh[variation_index] <- "1" == stringr::str_sub(
+            t_topo$sequence[variation_index], pos, pos)
+              # Determine p_in_tmh
+            t_is_in_tmh$p_in_tmh <- stringr::str_count(t_topo$sequence, "1") /
+                nchar(t_topo$sequence)
+        }
+      }, error = function(e) {
+          # Valid reasons to skip
+          testthat::expect_match(e$message, "Do no accept (frame shifts|extensions|insertions|delins)")
+        }
       )
-      if (this_variation$from != this_variation$to) {
-        pos <- this_variation$pos
-        t_is_in_tmh$is_in_tmh[variation_index] <- "1" == stringr::str_sub(
-          t_topo$sequence[variation_index], pos, pos)
-      }
     }
-
-    # Determine p_in_tmh
-    t_is_in_tmh$p_in_tmh <- stringr::str_count(t_topo$sequence, "1") /
-        nchar(t_topo$sequence)
   }
   # Save
   readr::write_csv(
