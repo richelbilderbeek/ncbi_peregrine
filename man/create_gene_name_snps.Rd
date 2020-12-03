@@ -4,7 +4,7 @@
 \alias{create_gene_name_snps}
 \title{Per gene name, save a table with SNP IDs to file}
 \usage{
-create_gene_name_snps(gene_names_filename, folder_name)
+create_gene_name_snps(gene_names_filename)
 }
 \arguments{
 \item{gene_names_filename}{the filename to save

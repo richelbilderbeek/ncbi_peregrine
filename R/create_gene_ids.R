@@ -12,7 +12,7 @@ create_gene_ids <- function(
   # On local, use only a few
   gene_ids <- all_gene_ids
   if (is.finite(n_gene_ids)) {
-    gene_ids <- head(gene_ids, n = n_gene_ids)
+    gene_ids <- utils::head(gene_ids, n = n_gene_ids)
   }
 
   t_gene_ids <- tibble::tibble(
