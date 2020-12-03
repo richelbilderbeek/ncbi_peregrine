@@ -9,6 +9,10 @@ convert it to a \code{csv} file with the merged table}
 create_snp_variations_csv_files(variations_rds_filenames, verbose = FALSE)
 }
 \arguments{
+\item{variations_rds_filenames}{names of one or more
+\code{[gene_name]_variations.rds}
+files}
+
 \item{verbose}{set to TRUE for more output}
 }
 \value{

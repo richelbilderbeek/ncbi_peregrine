@@ -12,6 +12,10 @@ default_params_doc(
   n_snps,
   snps_filename,
   snps_filenames,
+  variations_csv_filename,
+  variations_csv_filenames,
+  variations_rds_filename,
+  variations_rds_filenames,
   verbose
 )
 }
@@ -39,6 +43,20 @@ These files can be read by \link{read_snps_file}}
 containing the SNP IDs,
 named \code{[gene_name]_snps.csv}.
 These files can be read by \link{read_snps_file}}
+
+\item{variations_csv_filename}{name of a \code{[gene_name]_variations.csv}
+file}
+
+\item{variations_csv_filenames}{names of one or more
+\code{[gene_name]_variations.csv}
+files}
+
+\item{variations_rds_filename}{name of a \code{[gene_name]_variations.rds}
+file}
+
+\item{variations_rds_filenames}{names of one or more
+\code{[gene_name]_variations.rds}
+files}
 
 \item{verbose}{set to TRUE for more output}
 }

@@ -8,6 +8,10 @@ convert it to a \code{csv} file with the merged table}
 \usage{
 create_snp_variations_csv_file(variations_rds_filename)
 }
+\arguments{
+\item{variations_rds_filename}{name of a \code{[gene_name]_variations.rds}
+file}
+}
 \value{
 names of the \code{csv} files created
 }

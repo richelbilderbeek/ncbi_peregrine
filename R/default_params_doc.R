@@ -18,6 +18,16 @@
 #'   containing the SNP IDs,
 #'   named \code{[gene_name]_snps.csv}.
 #'   These files can be read by \link{read_snps_file}
+#' @param variations_csv_filename name of a \code{[gene_name]_variations.csv}
+#'   file
+#' @param variations_csv_filenames names of one or more
+#'   \code{[gene_name]_variations.csv}
+#'   files
+#' @param variations_rds_filename name of a \code{[gene_name]_variations.rds}
+#'   file
+#' @param variations_rds_filenames names of one or more
+#'   \code{[gene_name]_variations.rds}
+#'   files
 #' @param verbose set to TRUE for more output
 #' @author Richèl J.C. Bilderbeek
 #' @note This is an internal function, so it should be marked with
@@ -30,6 +40,10 @@ default_params_doc <- function(
   n_snps,
   snps_filename,
   snps_filenames,
+  variations_csv_filename,
+  variations_csv_filenames,
+  variations_rds_filename,
+  variations_rds_filenames,
   verbose
 ) {
   # Nothing
