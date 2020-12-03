@@ -1,9 +1,5 @@
 #' Create all gene IDs of human membrane proteins
-#' @param n_gene_ids the number of gene IDs.
-#'   Use \link{Inf} to use all gene IDs
-#' @param gene_ids_filename the filename to save
-#'   the gene IDs to.
-#'   For the experiment, use \code{gene_ids.csv}
+#' @inheritParams default_params_doc
 #' @export
 create_gene_ids <- function(
   n_gene_ids,

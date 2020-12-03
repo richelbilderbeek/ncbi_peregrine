@@ -4,11 +4,15 @@
 \alias{create_gene_ids}
 \title{Create all gene IDs of human membrane proteins}
 \usage{
-create_gene_ids(n_gene_ids, filename)
+create_gene_ids(n_gene_ids, gene_ids_filename)
 }
 \arguments{
 \item{n_gene_ids}{the number of gene IDs.
 Use \link{Inf} to use all gene IDs}
+
+\item{gene_ids_filename}{the filename to save
+the gene IDs to.
+For the experiment, use \code{gene_ids.csv}}
 }
 \description{
 Create all gene IDs of human membrane proteins
