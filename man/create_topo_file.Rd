@@ -6,6 +6,9 @@
 \usage{
 create_topo_file(fasta_filename)
 }
+\arguments{
+\item{fasta_filename}{name of a FASTA file with a protein sequence}
+}
 \description{
 Create the topology files from the FASTA files
 }

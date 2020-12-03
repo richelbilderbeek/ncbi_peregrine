@@ -6,12 +6,16 @@
 documentation.}
 \usage{
 default_params_doc(
+  fasta_filename,
+  fasta_filenames,
   gene_ids_filename,
   gene_names_filename,
   n_gene_ids,
   n_snps,
   snps_filename,
   snps_filenames,
+  topo_filename,
+  topo_filenames,
   variations_csv_filename,
   variations_csv_filenames,
   variations_rds_filename,
@@ -20,6 +24,11 @@ default_params_doc(
 )
 }
 \arguments{
+\item{fasta_filename}{name of a FASTA file with a protein sequence}
+
+\item{fasta_filenames}{name of one or more FASTA files
+with protein sequences}
+
 \item{gene_ids_filename}{the filename to save
 the gene IDs to.
 For the experiment, use \code{gene_ids.csv}}
@@ -43,6 +52,11 @@ These files can be read by \link{read_snps_file}}
 containing the SNP IDs,
 named \code{[gene_name]_snps.csv}.
 These files can be read by \link{read_snps_file}}
+
+\item{topo_filename}{name of a \code{.topo} file with a protein topology}
+
+\item{topo_filenames}{name of one or more \code{.topo} files
+with protein topologies}
 
 \item{variations_csv_filename}{name of a \code{[gene_name]_variations.csv}
 file}
