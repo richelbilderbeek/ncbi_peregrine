@@ -1,6 +1,6 @@
 ncbiperegrine::create_snp_variations_rds_files(
   snps_filenames = list.files(pattern = "_snps\\.csv"),
-  n_snps = 10
+  n_snps = 30
 )
 
 readr::write_lines(
