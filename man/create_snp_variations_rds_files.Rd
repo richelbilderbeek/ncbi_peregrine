@@ -5,7 +5,7 @@
 \title{For each gene's SNPs,
 create an \code{rds} file containing a tibble of variations per SNP}
 \usage{
-create_snp_variations_rds_files(snps_filenames, n_snps)
+create_snp_variations_rds_files(snps_filenames, n_snps, verbose = FALSE)
 }
 \arguments{
 \item{snps_filenames}{one or more filenames of files
@@ -15,6 +15,8 @@ These files can be read by \link{read_snps_file}}
 
 \item{n_snps}{the number of SNPs.
 Use \link{Inf} to use all SNS IDs}
+
+\item{verbose}{set to TRUE for more output}
 }
 \value{
 names of the \code{rds} files created

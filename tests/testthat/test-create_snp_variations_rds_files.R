@@ -1,7 +1,4 @@
 test_that("use", {
-  skip("WIP")
-
-
   snps_filenames <- system.file(
     "extdata", c("1956_snps.csv", "348_snps.csv", "7124_snps.csv"),
     package = "ncbiperegrine"
