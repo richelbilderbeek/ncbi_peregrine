@@ -1,15 +1,15 @@
 test_that("use", {
-  filename <- tempfile()
+  gene_ids_filename <- tempfile()
   n_gene_ids <- 2
 
   create_gene_ids(
     n_gene_ids = n_gene_ids,
-    filename = filename
+    gene_ids_filename = gene_ids_filename
   )
 
-  expect_true(file.exists(filename))
+  expect_true(file.exists(gene_ids_filename))
   t <- readr::read_csv(
-    file = filename,
+    file = gene_ids_filename,
     col_types = readr::cols(
       gene_id = readr::col_double()
     )
