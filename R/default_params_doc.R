@@ -8,6 +8,16 @@
 #'   For the experiment, use \code{gene_names.csv}
 #' @param n_gene_ids the number of gene IDs.
 #'   Use \link{Inf} to use all gene IDs
+#' @param n_snps the number of SNPs.
+#'   Use \link{Inf} to use all SNS IDs
+#' @param snps_filename one filenames of a file
+#'   containing the SNP IDs,
+#'   named \code{[gene_name]_snps.csv}.
+#'   These files can be read by \link{read_snps_file}
+#' @param snps_filenames one or more filenames of files
+#'   containing the SNP IDs,
+#'   named \code{[gene_name]_snps.csv}.
+#'   These files can be read by \link{read_snps_file}
 #' @param verbose set to TRUE for more output
 #' @author Richèl J.C. Bilderbeek
 #' @note This is an internal function, so it should be marked with
@@ -17,6 +27,9 @@ default_params_doc <- function(
   gene_ids_filename,
   gene_names_filename,
   n_gene_ids,
+  n_snps,
+  snps_filename,
+  snps_filenames,
   verbose
 ) {
   # Nothing

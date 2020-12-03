@@ -17,6 +17,7 @@ Imports:
     dplyr,
     ncbi,
     readr,
+    stringr,
     tibble
 Suggests: 
     testthat

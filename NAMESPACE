@@ -3,3 +3,6 @@
 export(create_gene_ids)
 export(create_gene_name_snps)
 export(create_gene_names)
+export(create_snp_variations_rds_file)
+export(create_snp_variations_rds_files)
+export(read_snps_file)

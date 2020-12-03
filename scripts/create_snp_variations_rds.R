@@ -1,5 +1,6 @@
-ncbiperegrine::create_snp_variations_rds(
-  gene_names_filename = "gene_names.csv"
+ncbiperegrine::create_snp_variations_rds_files(
+  snps_filenames = list.files(pattern = "_snps\\.csv"),
+  n_snps = 3
 )
 
 readr::write_lines(

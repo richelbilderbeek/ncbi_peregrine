@@ -5,7 +5,15 @@
 \title{This function does nothing. It is intended to inherit is parameters'
 documentation.}
 \usage{
-default_params_doc(gene_ids_filename, gene_names_filename, n_gene_ids, verbose)
+default_params_doc(
+  gene_ids_filename,
+  gene_names_filename,
+  n_gene_ids,
+  n_snps,
+  snps_filename,
+  snps_filenames,
+  verbose
+)
 }
 \arguments{
 \item{gene_ids_filename}{the filename to save
@@ -18,6 +26,19 @@ For the experiment, use \code{gene_names.csv}}
 
 \item{n_gene_ids}{the number of gene IDs.
 Use \link{Inf} to use all gene IDs}
+
+\item{n_snps}{the number of SNPs.
+Use \link{Inf} to use all SNS IDs}
+
+\item{snps_filename}{one filenames of a file
+containing the SNP IDs,
+named \code{[gene_name]_snps.csv}.
+These files can be read by \link{read_snps_file}}
+
+\item{snps_filenames}{one or more filenames of files
+containing the SNP IDs,
+named \code{[gene_name]_snps.csv}.
+These files can be read by \link{read_snps_file}}
 
 \item{verbose}{set to TRUE for more output}
 }
