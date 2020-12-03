@@ -6,5 +6,5 @@ if (!peregrine::is_on_peregrine()) {
 
 ncbiperegrine::create_gene_ids(
   n_gene_ids = n_gene_ids,
-  filename = "gene_ids.csv"
+  gene_ids_filename = "gene_ids.csv"
 )
