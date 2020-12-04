@@ -6,10 +6,10 @@ gene_ids.csv:
 gene_names.csv: gene_ids.csv
 	Rscript create_gene_names.R
 
-create_gene_name_snps_is_done.txt: gene_names.csv
-	Rscript create_gene_name_snps.R
+create_gene_name_snps_files_is_done.txt: gene_names.csv
+	Rscript create_gene_name_snps_files.R
 
-create_snp_variations_rds_is_done.txt: create_gene_name_snps_is_done.txt
+create_snp_variations_rds_is_done.txt: create_gene_name_snps_files_is_done.txt
 	Rscript create_snp_variations_rds.R
 
 # Create the CSVs after all SNPs are saved as .rds

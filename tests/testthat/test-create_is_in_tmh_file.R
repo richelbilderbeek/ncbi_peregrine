@@ -17,7 +17,4 @@ test_that("use", {
   )
   expect_true(file.exists(in_tmh_filename))
   t_in_tmh <- read_is_in_tmh_file(in_tmh_filename)
-
-  #file.remove(in_tmh_filename)
-  #expect_true(all(!file.exists(in_tmh_filename)))
 })

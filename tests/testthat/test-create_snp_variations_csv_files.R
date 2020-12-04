@@ -9,6 +9,4 @@ test_that("use", {
     variations_rds_filenames = variations_rds_filenames
   )
   expect_true(all(file.exists(variations_csv_filenames)))
-  #file.remove(variations_csv_filenames)
-  #expect_true(all(!file.exists(variations_csv_filenames)))
 })

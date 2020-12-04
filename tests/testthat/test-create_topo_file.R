@@ -10,17 +10,14 @@ test_that("use", {
   )
   expect_true(file.exists(topo_filename))
 
-  t_fasta  <- pureseqtmr::load_fasta_file_as_tibble(fasta_filename)
-  t_topo  <- pureseqtmr::load_fasta_file_as_tibble(topo_filename)
+  t_fasta <- pureseqtmr::load_fasta_file_as_tibble(fasta_filename)
+  t_topo <- pureseqtmr::load_fasta_file_as_tibble(topo_filename)
   expect_equal(
     t_fasta$name,
-    t_topology$name
+    t_topo$name
   )
   expect_equal(
     nchar(t_fasta$sequence),
-    nchar(t_topology$topology)
+    nchar(t_topo$topology)
   )
-
-  #file.remove(topo_filename)
-  ##expect_true(all(!file.exists(topo_filename)))
 })

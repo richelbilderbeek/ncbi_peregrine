@@ -9,7 +9,4 @@ test_that("use", {
     variations_csv_filenames = variations_csv_filenames
   )
   expect_true(all(file.exists(fasta_filenames)))
-
-  #file.remove(fasta_filenames)
-  #expect_true(all(!file.exists(fasta_filenames)))
 })

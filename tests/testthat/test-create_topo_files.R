@@ -9,6 +9,4 @@ test_that("use", {
     fasta_filenames = fasta_filenames
   )
   expect_true(all(file.exists(topo_filenames)))
-  #file.remove(topo_filenames)
-  #expect_true(all(!file.exists(topo_filenames)))
 })
