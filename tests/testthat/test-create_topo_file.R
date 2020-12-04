@@ -1,8 +1,12 @@
 test_that("use", {
-  fasta_filename <- system.file(
-    "extdata",
-    "1956.fasta",
-    package = "ncbiperegrine"
+  fasta_filename <- tempfile(fileext = ".fasta")
+  file.copy(
+    from = system.file(
+      "extdata",
+      "1956.fasta",
+      package = "ncbiperegrine"
+    ),
+    to = fasta_filename
   )
   expect_true(file.exists(fasta_filename))
   topo_filename <- create_topo_file(
@@ -18,6 +22,6 @@ test_that("use", {
   )
   expect_equal(
     nchar(t_fasta$sequence),
-    nchar(t_topo$topology)
+    nchar(t_topo$sequence)
   )
 })

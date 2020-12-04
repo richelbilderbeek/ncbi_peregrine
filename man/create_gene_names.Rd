@@ -12,7 +12,8 @@ the gene IDs to.
 For the experiment, use \code{gene_ids.csv}}
 
 \item{gene_names_filename}{the filename to save
-the gene IDs and gene names to.
+the gene IDs and gene names to,
+as can be read by \link{read_gene_names_file}.
 For the experiment, use \code{gene_names.csv}}
 }
 \description{

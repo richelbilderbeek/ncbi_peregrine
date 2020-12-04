@@ -5,14 +5,7 @@
 create_gene_name_snps_files <- function(
   gene_names_filename
 ) {
-  testthat::expect_true(file.exists(gene_names_filename))
-  t <- readr::read_csv(
-    file = gene_names_filename,
-    col_types = readr::cols(
-      gene_id = readr::col_double(),
-      gene_name = readr::col_character()
-    )
-  )
+  t <- ncbiperegrine::read_gene_names_file(gene_names_filename)
 
   testthat::expect_true("gene_id" %in% names(t))
   testthat::expect_true("gene_name" %in% names(t))

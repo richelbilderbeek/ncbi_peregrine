@@ -1,7 +1,8 @@
 test_that("use", {
-  snps_filename <- system.file(
-    "extdata", "7124_snps.csv",
-    package = "ncbiperegrine"
+  snps_filename <- tempfile(fileext = "_snps.csv")
+  file.copy(
+    from = system.file("extdata", "7124_snps.csv", package = "ncbiperegrine"),
+    to = snps_filename
   )
   n_snps <- 10
   expect_true(file.exists(snps_filename))

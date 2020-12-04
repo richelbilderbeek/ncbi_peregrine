@@ -1,8 +1,12 @@
 test_that("use", {
-  variations_csv_filename <- system.file(
-    "extdata",
-    "1956_variations.csv",
-    package = "ncbiperegrine"
+  variations_csv_filename <- tempfile(fileext = "_variations.csv")
+  file.copy(
+    from = system.file(
+      "extdata",
+      "1956_variations.csv",
+      package = "ncbiperegrine"
+    ),
+    to = variations_csv_filename
   )
   expect_true(all(file.exists(variations_csv_filename)))
   fasta_filename <- create_fasta_file(
@@ -20,6 +24,4 @@ test_that("use", {
       replacement = ""
     )
   )
-  # file.remove(fasta_filename)
-  # expect_true(all(!file.exists(fasta_filename)))
 })
