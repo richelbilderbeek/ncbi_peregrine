@@ -6,6 +6,12 @@
 \usage{
 read_is_in_tmh_file(is_in_tmh_filename)
 }
+\arguments{
+\item{is_in_tmh_filename}{the filename to save
+the \code{is_in_tmh} table to (as can be read by
+\link{read_is_in_tmh_file}).
+For the experiment, use \code{[gene_name]_is_in_tmh.csv}}
+}
 \value{
 a \link[tibble]{tibble} with columns named
 \code{variation}, \code{is_in_tmh} and \code{p_in_tmh}

@@ -1,4 +1,5 @@
 #' Create one \code{[gene_name]_is_in_tmh.csv} file.
+#' @inheritParams default_params_doc
 #' @export
 create_is_in_tmh_file <- function(
   variations_csv_filename,

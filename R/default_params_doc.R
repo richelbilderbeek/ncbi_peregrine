@@ -9,6 +9,14 @@
 #' @param gene_names_filename the filename to save
 #'   the gene IDs and gene names to.
 #'   For the experiment, use \code{gene_names.csv}
+#' @param is_in_tmh_filename the filename to save
+#'   the \code{is_in_tmh} table to (as can be read by
+#'   \link{read_is_in_tmh_file}).
+#'   For the experiment, use \code{[gene_name]_is_in_tmh.csv}
+#' @param is_in_tmh_filenames the filename to save
+#'   the \code{is_in_tmh} tables to (each of which can be read by
+#'   \link{read_is_in_tmh_file}).
+#'   For the experiment, use \code{[gene_name]_is_in_tmh.csv}
 #' @param n_gene_ids the number of gene IDs.
 #'   Use \link{Inf} to use all gene IDs
 #' @param n_snps the number of SNPs.
@@ -44,6 +52,8 @@ default_params_doc <- function(
   fasta_filenames,
   gene_ids_filename,
   gene_names_filename,
+  is_in_tmh_filename,
+  is_in_tmh_filenames,
   n_gene_ids,
   n_snps,
   snps_filename,

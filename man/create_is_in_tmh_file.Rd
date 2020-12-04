@@ -6,6 +6,12 @@
 \usage{
 create_is_in_tmh_file(variations_csv_filename, topo_filename)
 }
+\arguments{
+\item{variations_csv_filename}{name of a \code{[gene_name]_variations.csv}
+file}
+
+\item{topo_filename}{name of a \code{.topo} file with a protein topology}
+}
 \description{
 Create one \code{[gene_name]_is_in_tmh.csv} file.
 }
