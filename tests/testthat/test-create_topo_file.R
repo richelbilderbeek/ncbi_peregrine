@@ -21,6 +21,6 @@ test_that("use", {
     nchar(t_topology$topology)
   )
 
-  file.remove(topo_filename)
-  expect_true(all(!file.exists(topo_filename)))
+  #file.remove(topo_filename)
+  ##expect_true(all(!file.exists(topo_filename)))
 })

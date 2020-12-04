@@ -10,6 +10,6 @@ test_that("use", {
   )
   expect_true(all(file.exists(fasta_filenames)))
 
-  file.remove(fasta_filenames)
-  expect_true(all(!file.exists(fasta_filenames)))
+  #file.remove(fasta_filenames)
+  #expect_true(all(!file.exists(fasta_filenames)))
 })

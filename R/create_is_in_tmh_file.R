@@ -1,49 +1,37 @@
-t <- readr::read_csv(
-  file = "gene_names.csv",
-  col_types = readr::cols(
-    gene_id = readr::col_double(),
-    gene_name = readr::col_character()
+#' Create one \code{[gene_name]_is_in_tmh.csv} file.
+#' @export
+create_is_in_tmh_file <- function(
+  variations_csv_filename,
+  topo_filename
+) {
+  testthat::expect_equal(
+    length(variations_csv_filename),
+    length(topo_filename)
   )
-)
-testthat::expect_true("gene_id" %in% names(t))
-testthat::expect_true("gene_name" %in% names(t))
-t$topo_filename <- paste0(t$gene_id, ".topo")
-t$variations_filename <- paste0(t$gene_id, "_variations.csv")
-t$is_in_tmh_filename <- paste0(t$gene_id, "_is_in_tmh.csv")
+  testthat::expect_true(file.exists(variations_csv_filename))
+  testthat::expect_true(file.exists(topo_filename))
+  is_in_tmh_filename <- stringr::str_replace(
+    string = variations_csv_filename,
+    pattern = "_variations.csv",
+    replacement = "_is_in_tmh.csv"
+  )
 
-# i <- 201
-# variation will be a frame shift
+  # i <- 201
+  # variation will be a frame shift
 
-# i <- 210
-# variation will be NP_068743.3:p.Ter846TyrextTer?
+  # i <- 210
+  # variation will be NP_068743.3:p.Ter846TyrextTer?
 
-# i <- 398
-# NP_001172112.1:p.Arg249delinsThrGluArgTer
+  # i <- 398
+  # NP_001172112.1:p.Arg249delinsThrGluArgTer
 
-# i <- 762
-# NP_001180552.1:p.Pro27del
-
-
-for (i in seq_len(nrow(t))) {
-
-  # The gene
-  gene_name <- t$gene_name[i]
-  message(i, "/", nrow(t), ": ", gene_name)
+  # i <- 762
+  # NP_001180552.1:p.Pro27del
 
   # The variations filename
-  variations_filename <- t$variations_filename[i]
-  testthat::expect_true(file.exists(variations_filename))
-  t_variations  <- readr::read_csv(
-    variations_filename,
-    col_types = readr::cols(
-      snp_id = readr::col_double(),
-      variation = readr::col_character()
-    )
-  )
+  t_variations  <- ncbiperegrine::read_variations_csv_file(variations_csv_filename)
 
   # The topo filename
-  topo_filename <- t$topo_filename[i]
-  testthat::expect_true(file.exists(topo_filename))
   t_topo  <- pureseqtmr::load_fasta_file_as_tibble(topo_filename)
   testthat::expect_equal(nrow(t_variations), nrow(t_topo))
 
@@ -88,12 +76,8 @@ for (i in seq_len(nrow(t))) {
   # Save
   readr::write_csv(
     x = t_is_in_tmh,
-    file = t$is_in_tmh_filename[i]
+    file = is_in_tmh_filename
   )
-  testthat::expect_true(file.exists(t$is_in_tmh_filename[i]))
+  testthat::expect_true(file.exists(is_in_tmh_filename))
+  is_in_tmh_filename
 }
-
-readr::write_lines(
-  x = Sys.time(),
-  file = "create_is_in_tmh_files_is_done.txt"
-)

@@ -20,6 +20,6 @@ test_that("use", {
     read_snps_file(snps_filename = snps_filename)$snp_id[7]
   )
 
-  file.remove(variations_rds_filename)
-  expect_false(file.exists(variations_rds_filename))
+  #file.remove(variations_rds_filename)
+  #expect_false(file.exists(variations_rds_filename))
 })

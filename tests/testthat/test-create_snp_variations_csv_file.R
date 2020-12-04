@@ -13,6 +13,6 @@ test_that("use", {
   t_variations <- readr::read_csv(variations_csv_filename)
   expect_equal(tibbles[[23]], t_variations[1:2, ])
   expect_equal(tibbles[[24]], t_variations[3:4, ])
-  file.remove(variations_csv_filename)
-  expect_true(!file.exists(variations_csv_filename))
+  #file.remove(variations_csv_filename)
+  #expect_true(!file.exists(variations_csv_filename))
 })

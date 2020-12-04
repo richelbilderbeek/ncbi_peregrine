@@ -9,6 +9,6 @@ test_that("use", {
     n_snps = 2
   )
   expect_true(all(file.exists(variations_rds_filenames)))
-  file.remove(variations_rds_filenames)
-  expect_true(all(!file.exists(variations_rds_filenames)))
+  # file.remove(variations_rds_filenames)
+  # expect_true(all(!file.exists(variations_rds_filenames)))
 })
