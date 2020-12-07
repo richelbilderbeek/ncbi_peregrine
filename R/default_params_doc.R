@@ -22,11 +22,21 @@
 #'   Use \link{Inf} to use all gene IDs
 #' @param n_snps the number of SNPs.
 #'   Use \link{Inf} to use all SNS IDs
+#' @param results_filename name of the results file.
+#'   For the experiment, use \code{results.csv}
 #' @param snps_filename one filenames of a file
 #'   containing the SNP IDs,
 #'   named \code{[gene_name]_snps.csv}.
 #'   These files can be read by \link{read_snps_file}
 #' @param snps_filenames one or more filenames of files
+#'   containing the SNP IDs,
+#'   named \code{[gene_name]_snps.csv}.
+#'   These files can be read by \link{read_snps_file}
+#' @param snps_id_filename one filenames of a file
+#'   containing the SNP IDs,
+#'   named \code{[gene_name]_snps.csv}.
+#'   These files can be read by \link{read_snps_file}
+#' @param snps_id_filenames one or more filenames of files
 #'   containing the SNP IDs,
 #'   named \code{[gene_name]_snps.csv}.
 #'   These files can be read by \link{read_snps_file}
@@ -57,6 +67,7 @@ default_params_doc <- function(
   is_in_tmh_filenames,
   n_gene_ids,
   n_snps,
+  results_filename,
   snps_filename,
   snps_filenames,
   topo_filename,

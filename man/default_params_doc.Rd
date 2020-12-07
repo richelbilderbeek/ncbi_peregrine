@@ -14,6 +14,7 @@ default_params_doc(
   is_in_tmh_filenames,
   n_gene_ids,
   n_snps,
+  results_filename,
   snps_filename,
   snps_filenames,
   topo_filename,
@@ -56,6 +57,9 @@ Use \link{Inf} to use all gene IDs}
 \item{n_snps}{the number of SNPs.
 Use \link{Inf} to use all SNS IDs}
 
+\item{results_filename}{name of the results file.
+For the experiment, use \code{results.csv}}
+
 \item{snps_filename}{one filenames of a file
 containing the SNP IDs,
 named \code{[gene_name]_snps.csv}.
@@ -86,6 +90,16 @@ file}
 files}
 
 \item{verbose}{set to TRUE for more output}
+
+\item{snps_id_filename}{one filenames of a file
+containing the SNP IDs,
+named \code{[gene_name]_snps.csv}.
+These files can be read by \link{read_snps_file}}
+
+\item{snps_id_filenames}{one or more filenames of files
+containing the SNP IDs,
+named \code{[gene_name]_snps.csv}.
+These files can be read by \link{read_snps_file}}
 }
 \description{
 This function does nothing. It is intended to inherit is parameters'

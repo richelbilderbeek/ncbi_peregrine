@@ -1,3 +1,4 @@
+if (1 == 2) {
 t_gene_names <- readr::read_csv(
   file = "gene_names.csv",
   col_types = readr::cols(
@@ -168,3 +169,4 @@ readr::write_csv(x = t_results, file = "results_raw.csv")
 
 readr::write_csv(x = na.omit(t_results), file = "results.csv")
 
+}

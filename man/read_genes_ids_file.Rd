@@ -6,6 +6,11 @@
 \usage{
 read_genes_ids_file(gene_ids_filename)
 }
+\arguments{
+\item{gene_ids_filename}{the filename to save
+the gene IDs to.
+For the experiment, use \code{gene_ids.csv}}
+}
 \description{
 Read
 }
