@@ -26,6 +26,7 @@ test_that("use", {
   expect_true(file.exists(in_tmh_filename))
   t_in_tmh <- read_is_in_tmh_file(in_tmh_filename)
   t_variations <- read_variations_csv_file(variations_csv_filename)
-  expect_equal(t_variations$variation, t_in_tmh$variation)
 
+  # 'variation' columns must match
+  expect_equal(t_variations$variation, t_in_tmh$variation)
 })
