@@ -70,6 +70,8 @@ default_params_doc <- function(
   results_filename,
   snps_filename,
   snps_filenames,
+  snps_id_filename,
+  snps_id_filenames,
   topo_filename,
   topo_filenames,
   variations_csv_filename,

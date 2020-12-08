@@ -17,6 +17,8 @@ default_params_doc(
   results_filename,
   snps_filename,
   snps_filenames,
+  snps_id_filename,
+  snps_id_filenames,
   topo_filename,
   topo_filenames,
   variations_csv_filename,
@@ -70,6 +72,16 @@ containing the SNP IDs,
 named \code{[gene_name]_snps.csv}.
 These files can be read by \link{read_snps_file}}
 
+\item{snps_id_filename}{one filenames of a file
+containing the SNP IDs,
+named \code{[gene_name]_snps.csv}.
+These files can be read by \link{read_snps_file}}
+
+\item{snps_id_filenames}{one or more filenames of files
+containing the SNP IDs,
+named \code{[gene_name]_snps.csv}.
+These files can be read by \link{read_snps_file}}
+
 \item{topo_filename}{name of a \code{.topo} file with a protein topology}
 
 \item{topo_filenames}{name of one or more \code{.topo} files
@@ -90,16 +102,6 @@ file}
 files}
 
 \item{verbose}{set to TRUE for more output}
-
-\item{snps_id_filename}{one filenames of a file
-containing the SNP IDs,
-named \code{[gene_name]_snps.csv}.
-These files can be read by \link{read_snps_file}}
-
-\item{snps_id_filenames}{one or more filenames of files
-containing the SNP IDs,
-named \code{[gene_name]_snps.csv}.
-These files can be read by \link{read_snps_file}}
 }
 \description{
 This function does nothing. It is intended to inherit is parameters'

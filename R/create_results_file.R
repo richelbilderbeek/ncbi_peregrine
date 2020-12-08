@@ -2,16 +2,35 @@
 #' @inheritParams default_params_doc
 #' @export
 create_results_file <- function(
-  gene_names_filename = "gene_names.csv",
-  snp_ids_filenames,
-  variations_csv_filenames,
-  is_in_tmh_filenames,
-  results_filename = "results.csv"
+  is_in_tmh_filenames
 ) {
+  # Filenames
+  # All folder names must be the same
+  testthat::expect_equal(length(unique(dirname(is_in_tmh_filenames))), 1)
+  gene_names_filename <- file.path(
+    dirname(is_in_tmh_filenames)[1], "gene_names.csv"
+  )
+  testthat::expect_equal(length(gene_names_filename), 1)
+  testthat::expect_true(file.exists(gene_names_filename))
 
-  t_gene_names <- ncbiperegrine::read_gene_names_file(gene_names_filename)
-  #t_gene_names$filename <- paste0(t_gene_names$gene_id, ".csv")
-  #t_gene_names$is_in_tmh_filename <- paste0(t_gene_names$gene_id, "_is_in_tmh.csv")
+  snp_ids_filenames <- stringr::str_replace(
+    string = is_in_tmh_filenames,
+    pattern = "_is_in_tmh.csv",
+    replacement = "_snps.csv"
+  )
+  testthat::expect_true(all(file.exists(snp_ids_filenames)))
+
+  variations_csv_filenames <- stringr::str_replace(
+    string = is_in_tmh_filenames,
+    pattern = "_is_in_tmh.csv",
+    replacement = "_variations.csv"
+  )
+  testthat::expect_true(all(file.exists(variations_csv_filenames)))
+
+  results_filename <- file.path(
+    dirname(is_in_tmh_filenames)[1], "results.csv"
+  )
+  testthat::expect_equal(length(results_filename), 1)
 
   #
   # Create t_results for the first three columns
@@ -25,11 +44,15 @@ create_results_file <- function(
   # ...    |...      |...       |...                    |...      |...
   #
   # |----------------|
-  #   gene_names.csv
+  #   t_gene_names
   #
   #                  |----------|
   #                  [gene_name]_snps.csv
   #
+
+  # Gene name to gene ID LUT
+  t_gene_names <- ncbiperegrine::read_gene_names_file(gene_names_filename)
+
   # Get all SNP IDs per gene name
   t_snp_ids <- ncbiperegrine::read_snps_files(
     snps_filenames = snp_ids_filenames
@@ -139,25 +162,7 @@ create_results_file <- function(
   #                             |------------------------------------------|
   #                                      [gene_name]_is_in_tmh.csv
 
-  t_is_in_tmh <- list()
-  gene_names <- t_gene_names$gene_name
-  n_gene_names <- length(gene_names)
-  for (i in seq_len(n_gene_names)) {
-    testthat::expect_true(i <= nrow(t_gene_names))
-    testthat::expect_true(file.exists(t_gene_names$is_in_tmh_filename[i]))
-    t <- readr::read_csv(
-      file = t_gene_names$is_in_tmh_filename[i],
-      col_types = readr::cols(
-        variation = readr::col_character(),
-        is_in_tmh = readr::col_logical(),
-        p_in_tmh = readr::col_double()
-      )
-    )
-    t
-    t_is_in_tmh[[i]] <- t
-  }
-  t_is_in_tmh <- dplyr::bind_rows(t_is_in_tmh)
-
+  t_is_in_tmh <- read_is_in_tmh_files(is_in_tmh_filenames)
 
   t_results <- dplyr::inner_join(
     x = t_results_2,
