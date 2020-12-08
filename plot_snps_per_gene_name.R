@@ -32,7 +32,7 @@ library(dplyr)
 
 
 ggplot2::ggplot(
-  t %>% dplyr::filter(n_snps != 0),
+  dplyr::filter(t, n_snps != 0),
   ggplot2::aes(x = n_snps)
 ) + ggplot2::geom_histogram() +
   ggplot2::scale_x_log10(name = "Number of SNPS (zeroes removed)") +
@@ -41,7 +41,7 @@ ggplot2::ggplot(
     title = "Number of SNPs per gene",
     caption = paste0(
       "Number of genes: ", nrow(t), "\n",
-      "Lowest non-zero number of SNPs per gene: ", min((t  %>% dplyr::filter(n_snps != 0))$n_snps), "\n",
+      "Lowest non-zero number of SNPs per gene: ", min((dplyr::filter(t, n_snps != 0))$n_snps), "\n",
       "Mean number of SNPs per gene: ", mean(t$n_snps), "\n",
       "Total number of SNPs: ", sum(t$n_snps), "\n"
     )
