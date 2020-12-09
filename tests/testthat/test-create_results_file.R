@@ -1,5 +1,4 @@
 test_that("use", {
-  skip("WIP")
   is_in_tmh_filenames <- system.file(
     "extdata",
     c("1956_is_in_tmh.csv", "7124_is_in_tmh.csv", "348_is_in_tmh.csv"),
