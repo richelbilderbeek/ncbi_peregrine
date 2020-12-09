@@ -31,7 +31,7 @@ results.csv: create_is_in_tmh_files_is_done.txt
 	Rscript create_results.R
 
 clean:
-	rm -f *.csv *.txt *.rds *.fasta *.topo *.log
+	rm -f *.csv *.txt *.rds *.fasta *.topo *.log *.zip
 
 zip:
 	zip ncbi_peregrine_data.zip *.csv *.txt *.rds *.fasta *.topo *.log *.R Makefile *.sh
