@@ -26,7 +26,7 @@ create_fasta_file <- function(
   )
   testthat::expect_equal(nrow(t_variations), nrow(t_sequences))
   if (nrow(t_sequences) > 0) {
-    sequences <- ncbi::fetch_sequences_from_protein_ids(
+    sequences <- sprentrez::fetch_sequences_from_protein_ids(
       t_sequences$protein_id
     )
     testthat::expect_equal(length(t_sequences$protein_id), length(sequences))

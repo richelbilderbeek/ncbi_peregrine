@@ -27,6 +27,7 @@ jobs:
           install.packages(c("remotes", "rcmdcheck"))
           remotes::install_github("richelbilderbeek/cobaltr")
           remotes::install_github("richelbilderbeek/pureseqtmr")
+          remotes::install_github("richelbilderbeek/sprentrez")
           remotes::install_github("richelbilderbeek/ncbi")
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("rcmdcheck")
