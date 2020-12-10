@@ -1,11 +1,14 @@
 test_that("use", {
-  variations_csv_filename <- tempfile(fileext = "_variations.csv")
+  folder_name <- tempfile()
+  dir.create(path = folder_name, showWarnings = FALSE, recursive = TRUE)
+  source_variations_csv_filename <- system.file(
+    "extdata",
+    "1956_variations.csv",
+    package = "ncbiperegrine"
+  )
+  variations_csv_filename <- file.path(folder_name, basename(source_variations_csv_filename))
   file.copy(
-    from = system.file(
-      "extdata",
-      "1956_variations.csv",
-      package = "ncbiperegrine"
-    ),
+    from = source_variations_csv_filename,
     to = variations_csv_filename
   )
   expect_true(all(file.exists(variations_csv_filename)))

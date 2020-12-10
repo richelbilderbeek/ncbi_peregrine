@@ -11,19 +11,37 @@ create_is_in_tmh_files <- function(
     pattern = ".topo",
     replacement = "_variations.csv"
   )
+  is_in_tmh_filenames <- stringr::str_replace(
+    string = topo_filenames,
+    pattern = ".topo",
+    replacement = "_is_in_tmh.csv"
+  )
   testthat::expect_true(all(file.exists(variations_csv_filenames)))
   testthat::expect_equal(
     length(variations_csv_filenames),
     length(topo_filenames)
   )
+  testthat::expect_equal(
+    length(variations_csv_filenames),
+    length(is_in_tmh_filenames)
+  )
   n <- length(topo_filenames)
-  is_in_tmh_filenames <- rep(NA, n)
+
   for (i in seq_len(n)) {
-    is_in_tmh_filenames[i] <- ncbiperegrine::create_is_in_tmh_file(
+    if (file.exists(is_in_tmh_filenames[i])) {
+      if (verbose) {
+        message(
+          "Skip creating '", is_in_tmh_filenames[i],"': it is already present"
+        )
+      }
+      next
+    }
+    is_in_tmh_filename <- ncbiperegrine::create_is_in_tmh_file(
       variations_csv_filename = variations_csv_filenames[i],
       topo_filename = topo_filenames[i],
       verbose = verbose
     )
+    testthat::expect_equal(is_in_tmh_filenames[i], is_in_tmh_filename)
   }
   is_in_tmh_filenames
 }
