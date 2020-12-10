@@ -3,7 +3,7 @@
 #' @inheritParams default_params_doc
 #' @return names of the \code{rds} files created
 #' @export
-create_snp_variations_rds_files <- function(
+create_snp_variations_rds_files <- function( # nolint indeed a long function name
   snps_filenames,
   n_snps,
   verbose = FALSE
@@ -16,11 +16,12 @@ create_snp_variations_rds_files <- function(
   variations_rds_filenames <- rep(NA, n_snps_filenames)
   for (i in seq_len(n_snps_filenames)) {
     if (verbose) message(i, "/", n_snps_filenames, ": ", snps_filenames[i])
-    variations_rds_filenames[i] <- ncbiperegrine::create_snp_variations_rds_file(
-      snps_filename = snps_filenames[i],
-      n_snps = n_snps,
+    variations_rds_filenames[i] <-
+      ncbiperegrine::create_snp_variations_rds_file(
+        snps_filename = snps_filenames[i],
+        n_snps = n_snps,
         verbose = verbose
-    )
+      )
   }
   variations_rds_filenames
 }

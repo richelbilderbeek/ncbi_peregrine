@@ -18,20 +18,10 @@ create_is_in_tmh_file <- function(
     replacement = "_is_in_tmh.csv"
   )
 
-  # i <- 201
-  # variation will be a frame shift
-
-  # i <- 210
-  # variation will be NP_068743.3:p.Ter846TyrextTer?
-
-  # i <- 398
-  # NP_001172112.1:p.Arg249delinsThrGluArgTer
-
-  # i <- 762
-  # NP_001180552.1:p.Pro27del
-
   # The variations filename
-  t_variations  <- ncbiperegrine::read_variations_csv_file(variations_csv_filename)
+  t_variations  <- ncbiperegrine::read_variations_csv_file(
+    variations_csv_filename
+  )
 
   # The topo filename
   t_topo  <- pureseqtmr::load_fasta_file_as_tibble(topo_filename)
@@ -75,7 +65,10 @@ create_is_in_tmh_file <- function(
         }
       }, error = function(e) {
           # Valid reasons to skip
-          testthat::expect_match(e$message, "Do no accept (frame shifts|extensions|insertions|deletions|delins)")
+          testthat::expect_match(
+            e$message,
+            "Do no accept (frame shifts|extensions|insertions|deletions|delins|duplications)" # nolint indeed a long error regexp
+          )
         }
       )
     }

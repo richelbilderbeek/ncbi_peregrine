@@ -31,7 +31,7 @@ create_is_in_tmh_files <- function(
     if (file.exists(is_in_tmh_filenames[i])) {
       if (verbose) {
         message(
-          "Skip creating '", is_in_tmh_filenames[i],"': it is already present"
+          "Skip creating '", is_in_tmh_filenames[i], "': it is already present"
         )
       }
       next

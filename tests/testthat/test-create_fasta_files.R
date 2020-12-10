@@ -35,7 +35,7 @@ test_that("skip existing FASTA files", {
   dir.create(path = folder, showWarnings = FALSE, recursive = TRUE)
 
   # Create the variations_csv_filenames in the folder
-  source_variations_csv_filenames <- system.file(
+  source_variations_csv_filenames <- system.file( # nolint indeed a long variable name
       "extdata",
       c("1956_variations.csv", "348_variations.csv"),
       package = "ncbiperegrine"

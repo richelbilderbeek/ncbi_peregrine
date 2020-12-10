@@ -38,10 +38,10 @@ create_results_file <- function(
   #        t_results_1
   # |---------------------------|
   #
-  # gene_id|gene_name|snp_id    |variation              |is_in_tmh|p_in_tmh
+  # gene_id|gene_name|snp_id    |variation              |is_in_tmh|p_in_tmh     # nolint this is no code
   # -------|---------|----------|-----------------------|---------|--------
-  # 7124   |TNF      |1583049783|NP_000585.2:p.Gly144Asp|FALSE    |0.123
-  # ...    |...      |...       |...                    |...      |...
+  # 7124   |TNF      |1583049783|NP_000585.2:p.Gly144Asp|FALSE    |0.123        # nolint this is no code
+  # ...    |...      |...       |...                    |...      |...          # nolint this is no code
   #
   # |----------------|
   #   t_gene_names
@@ -87,10 +87,10 @@ create_results_file <- function(
   #                     t_results_2
   # |---------------------------------------------------|
   #
-  # gene_id|gene_name|snp_id    |variation              |is_in_tmh|p_in_tmh
+  # gene_id|gene_name|snp_id    |variation              |is_in_tmh|p_in_tmh     # nolint this is no code
   # -------|---------|----------|-----------------------|---------|--------
-  # 7124   |TNF      |1583049783|NP_000585.2:p.Gly144Asp|FALSE    |0.123
-  # ...    |...      |...       |...                    |...      |...
+  # 7124   |TNF      |1583049783|NP_000585.2:p.Gly144Asp|FALSE    |0.123        # nolint this is no code
+  # ...    |...      |...       |...                    |...      |...          # nolint this is no code
   #
   # |----------------|
   #   gene_names.csv
@@ -145,10 +145,10 @@ create_results_file <- function(
   #                     t_results
   # |---------------------------------------------------------------------|
   #
-  # gene_id|gene_name|snp_id    |variation              |is_in_tmh|p_in_tmh
+  # gene_id|gene_name|snp_id    |variation              |is_in_tmh|p_in_tmh     # nolint this is no code
   # -------|---------|----------|-----------------------|---------|--------
-  # 7124   |TNF      |1583049783|NP_000585.2:p.Gly144Asp|FALSE    |0.123
-  # ...    |...      |...       |...                    |...      |...
+  # 7124   |TNF      |1583049783|NP_000585.2:p.Gly144Asp|FALSE    |0.123        # nolint this is no code
+  # ...    |...      |...       |...                    |...      |...          # nolint this is no code
   #
   # |----------------|
   #   gene_names.csv

@@ -29,10 +29,6 @@ create_fasta_file <- function(
     sequences <- ncbi::fetch_sequences_from_protein_ids(
       t_sequences$protein_id
     )
-    # readr::write_csv(
-    #   x = tibble::tibble(protein_id = t_sequences$protein_id),
-    #   file = "~/protein_ids.csv"
-    # )
     testthat::expect_equal(length(t_sequences$protein_id), length(sequences))
     # Note that 'names(sequences)' contains the full names again
     t_sequences$sequence <- sequences

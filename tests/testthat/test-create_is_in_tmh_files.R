@@ -7,7 +7,7 @@ test_that("use", {
     c("1956.topo", "348.topo"),
     package = "ncbiperegrine"
   )
-  source_variations_csv_filenames <- stringr::str_replace(
+  source_variations_csv_filenames <- stringr::str_replace( # nolint indeed a long variable name
     string = source_topo_filenames,
     pattern = ".topo",
     replacement = "_variations.csv"
@@ -45,7 +45,7 @@ test_that("skip existing is_in_tmh files", {
     c("1956.topo", "348.topo"),
     package = "ncbiperegrine"
   )
-  source_variations_csv_filenames <- stringr::str_replace(
+  source_variations_csv_filenames <- stringr::str_replace( # nolint indeed a long variable name
     string = source_topo_filenames,
     pattern = ".topo",
     replacement = "_variations.csv"

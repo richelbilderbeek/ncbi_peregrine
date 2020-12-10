@@ -19,14 +19,19 @@ create_gene_names <- function(
 
   # Obtain the gene names per 100
   # This is needed for the NCBI API: too much names results into an error,
-  # where too few names result in many API calls that are limited to 3 per second
+  # where too few names result in many API calls
+  # that are limited to 3 per second
   #
   # Do this per 100, which seems a fine compromise
   sample_size <- 100
   while (sum(is.na(t$gene_name)) > sample_size) {
-    indices <- sample(which(is.na(t$gene_name)), size = sample_size, replace = FALSE)
+    indices <- sample(
+      which(is.na(t$gene_name)),
+      size = sample_size,
+      replace = FALSE
+    )
     testthat::expect_equal(sample_size, length(indices))
-    testthat::expect_true(all( is.na(t$gene_name[indices])))
+    testthat::expect_true(all(is.na(t$gene_name[indices])))
     gene_ids <- t$gene_id[indices]
     testthat::expect_equal(length(indices), length(gene_ids))
     gene_names <- ncbi::get_gene_names_from_human_gene_ids(gene_ids)

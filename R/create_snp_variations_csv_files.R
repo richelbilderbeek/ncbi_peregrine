@@ -4,7 +4,7 @@
 #' @inheritParams default_params_doc
 #' @return names of the \code{csv} files created
 #' @export
-create_snp_variations_csv_files <- function(
+create_snp_variations_csv_files <- function( # nolint indeed a long function name
   variations_rds_filenames,
   verbose = FALSE
 ) {
@@ -18,9 +18,10 @@ create_snp_variations_csv_files <- function(
         i, "/", n_variations_rds_filenames, ": ", variations_rds_filenames[i]
       )
     }
-    variations_csv_filenames[i] <- ncbiperegrine::create_snp_variations_csv_file(
-      variations_rds_filename = variations_rds_filenames[i]
-    )
+    variations_csv_filenames[i] <-
+      ncbiperegrine::create_snp_variations_csv_file(
+        variations_rds_filename = variations_rds_filenames[i]
+      )
   }
   variations_csv_filenames
 }

@@ -6,7 +6,10 @@ test_that("use", {
     "1956_variations.csv",
     package = "ncbiperegrine"
   )
-  variations_csv_filename <- file.path(folder_name, basename(source_variations_csv_filename))
+  variations_csv_filename <- file.path(
+    folder_name,
+    basename(source_variations_csv_filename)
+  )
   file.copy(
     from = source_variations_csv_filename,
     to = variations_csv_filename
