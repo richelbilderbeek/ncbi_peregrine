@@ -3,7 +3,8 @@
 #' @export
 create_is_in_tmh_file <- function(
   variations_csv_filename,
-  topo_filename
+  topo_filename,
+  verbose = FALSE
 ) {
   testthat::expect_equal(
     length(variations_csv_filename),
@@ -54,7 +55,12 @@ create_is_in_tmh_file <- function(
 
     # Determine in_in_tmh
     for (variation_index in seq(1, nrow(t_is_in_tmh))) {
-      message(variation_index, "/", nrow(t_is_in_tmh), ": ",  t_variations$variation[variation_index])
+      if (verbose) {
+        message(
+          variation_index, "/", nrow(t_is_in_tmh), ": ",
+          t_variations$variation[variation_index]
+        )
+      }
       tryCatch({
         this_variation <- ncbi::parse_hgvs(
           t_variations$variation[variation_index]

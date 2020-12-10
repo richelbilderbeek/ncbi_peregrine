@@ -88,4 +88,3 @@ test_that("skip existing FASTA files", {
     length(list.files(path = folder, pattern = ".fasta"))
   )
 })
-

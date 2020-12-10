@@ -4,13 +4,15 @@
 \alias{create_is_in_tmh_file}
 \title{Create one \code{[gene_name]_is_in_tmh.csv} file.}
 \usage{
-create_is_in_tmh_file(variations_csv_filename, topo_filename)
+create_is_in_tmh_file(variations_csv_filename, topo_filename, verbose = FALSE)
 }
 \arguments{
 \item{variations_csv_filename}{name of a \code{[gene_name]_variations.csv}
 file}
 
 \item{topo_filename}{name of a \code{.topo} file with a protein topology}
+
+\item{verbose}{set to TRUE for more output}
 }
 \description{
 Create one \code{[gene_name]_is_in_tmh.csv} file.
