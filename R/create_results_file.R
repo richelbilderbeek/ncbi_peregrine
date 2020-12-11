@@ -57,11 +57,18 @@ create_results_file <- function(
   t_snp_ids <- ncbiperegrine::read_snps_files(
     snps_filenames = snp_ids_filenames
   )
-  # All SNP IDs are unique
-  testthat::expect_equal(
-    length(t_snp_ids$snp_id),
-    length(unique(t_snp_ids$snp_id))
-  )
+  # Not all SNP IDs are unique, for example
+  # Gene ID | Gene name | SNP ID
+  # --------|-----------|------------|--------------------
+  # 113179  | ADAT3     | 1599245193 | adenosine deaminase
+  # 113178  | SCAMP4    | 1599245193 | secretory carrier membrane protein 4
+  if (1 == 2) {
+    t_snp_ids[utils::head(which(duplicated(t_snp_ids$snp_id))), ]
+    t_snp_ids[which(t_snp_ids$snp_id == 1599245193), ]
+    t_gene_names[
+      which(t_gene_names$gene_id == 113178 | t_gene_names$gene_id == 113179),
+    ]
+  }
 
   t_results_1 <- dplyr::inner_join(
     t_gene_names,
@@ -70,13 +77,6 @@ create_results_file <- function(
   )
 
   testthat::expect_equal(nrow(t_results_1), nrow(t_snp_ids))
-
-  # All SNP IDs are unique
-  testthat::expect_equal(
-    length(t_results_1$snp_id),
-    length(unique(t_results_1$snp_id))
-  )
-
   t_results_1
   #
   # Create t_results for the first four columns
@@ -108,16 +108,21 @@ create_results_file <- function(
   )
   testthat::expect_true(all(t_variations$snp_id %in% t_results_1$snp_id))
   # A SNP IDs can have multiple variations ...
-  testthat::expect_false(
-    length(t_variations$snp_id) ==
-    length(unique(t_variations$snp_id))
-  )
-  # ... but all variations are unique
-  testthat::expect_equal(
-    length(t_variations$variation),
-    length(unique(t_variations$variation))
-  )
-
+  # ... but also not all variations are unique
+  #
+  # Gene ID | Gene name | SNP ID     | Variation
+  # --------|-----------|------------|------------------------
+  # 406991  | MIR21     | 1598476080 | NP_112200.2:p.Glu369Gly                  # nolint this is no commented code
+  # 81671   | VMP1      | 1598476080 | NP_112200.2:p.Glu369Gly                  # nolint this is no commented code
+  if (1 == 2) {
+    t_variations[utils::head(which(duplicated(t_variations$variation))), ]
+    t_variations[
+      which(t_variations$variation == "NP_001316323.1:p.Glu369Gly"),
+    ]
+    t_gene_names[
+      which(t_gene_names$gene_id == 406991 | t_gene_names$gene_id == 81671),
+    ]
+  }
 
   t_results_2 <- dplyr::inner_join(
     x = t_results_1,
@@ -126,16 +131,6 @@ create_results_file <- function(
   )
   testthat::expect_equal(nrow(t_results_2), nrow(t_variations))
   t_results_2
-
-  # A SNP IDs can have multiple variations ...
-  testthat::expect_false(
-    length(t_results_2$snp_id) == length(unique(t_results_2$snp_id))
-  )
-  # ... but all variations are unique
-  testthat::expect_equal(
-    length(t_results_2$variation),
-    length(unique(t_results_2$variation))
-  )
 
   # Create t_results for all columns
   #

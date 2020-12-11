@@ -1,11 +1,26 @@
 test_that("use", {
-  is_in_tmh_filenames <- system.file(
+  folder_name <- tempfile()
+  dir.create(path = folder_name, showWarnings = FALSE, recursive = FALSE)
+
+  source_filenames <- system.file(
     "extdata",
-    c("1956_is_in_tmh.csv", "7124_is_in_tmh.csv", "348_is_in_tmh.csv"),
+    c(
+      "gene_names.csv",
+      "1956_snps.csv", "7124_snps.csv", "348_snps.csv",
+      "1956_variations.csv", "7124_variations.csv", "348_variations.csv",
+      "1956_is_in_tmh.csv", "7124_is_in_tmh.csv", "348_is_in_tmh.csv"
+    ),
     package = "ncbiperegrine"
   )
-
-  expect_true(all(file.exists(is_in_tmh_filenames)))
+  filenames <- file.path(folder_name, basename(source_filenames))
+  file.copy(
+    from = source_filenames,
+    to = filenames
+  )
+  expect_true(all(file.exists(filenames)))
+  is_in_tmh_filenames <- list.files(
+    path = folder_name, pattern = "_is_in_tmh.csv", full.names = TRUE
+  )
 
   results_filename <- create_results_file(
     is_in_tmh_filenames = is_in_tmh_filenames

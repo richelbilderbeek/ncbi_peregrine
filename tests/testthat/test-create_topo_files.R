@@ -1,4 +1,5 @@
 test_that("use", {
+  if (!pureseqtmr::is_pureseqtm_installed()) return()
   fasta_filenames <- system.file(
     "extdata",
     c("1956.fasta", "348.fasta", "7124.fasta"),

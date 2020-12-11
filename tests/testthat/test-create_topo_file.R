@@ -1,4 +1,5 @@
 test_that("use", {
+  if (!pureseqtmr::is_pureseqtm_installed()) return()
   fasta_filename <- tempfile(fileext = ".fasta")
   file.copy(
     from = system.file(
