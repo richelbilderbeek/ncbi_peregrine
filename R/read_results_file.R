@@ -1,5 +1,6 @@
 #' Read the results file
 #' @inheritParams default_params_doc
+#' @export
 read_results_file <- function(results_filename) {
   readr::read_csv(
     results_filename,

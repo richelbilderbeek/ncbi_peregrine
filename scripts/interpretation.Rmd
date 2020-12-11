@@ -1,0 +1,75 @@
+---
+title: "Interpretation"
+author: "Richel Bilderbeek"
+date: "12/11/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Load the library:
+
+```{r}
+library(ncbiperegrine)
+```
+
+Read the raw results:
+
+```{r}
+results <- read_results_file("results.csv")
+```
+
+This is how the results look like:
+
+```{r}
+knitr::kable(head(results))
+```
+
+There are this number of variations:
+
+```{r}
+cat(nrow(results))
+```
+
+Remove the results with NAs:
+
+```{r}
+results <- na.omit(results)
+cat(nrow(results))
+```
+
+
+Remove duplicated variations:
+
+```{r}
+results <- dplyr::distinct(results, variation, .keep_all = TRUE)
+cat(nrow(results))
+```
+The expect number of variations in TMHs:
+
+```{r}
+expect_n_variations_in_tmhs <- sum(results$p_in_tmh)
+cat(expect_n_variations_in_tmhs)
+```
+The actual number of variations in TMHs:
+
+```{r}
+actual_n_variations_in_tmhs <- sum(results$is_in_tmh)
+cat(actual_n_variations_in_tmhs)
+```
+
+```{r}
+p_value <- poisbinom::ppoisbinom(
+  q = actual_n_variations_in_tmhs,
+  pp = results$p_in_tmh
+)
+if (p_value < 0.05) {
+  cat(
+    "Number of variations in TMHs",
+    "signficantly lower than expected by chance,",
+    "hence TMHs are evolutionarily conserved"
+  )  
+}
+```
