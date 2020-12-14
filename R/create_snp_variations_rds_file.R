@@ -21,28 +21,31 @@ create_snp_variations_rds_file <- function(
     saveRDS(object = list(), file = variations_rds_filename)
   }
 
+  # The SNPs working on that gene that we already know
+  t_snp_ids <- ncbiperegrine::read_snps_file(snps_filename)
+
+  # The variations we're about to obtain
+  testthat::expect_true(file.exists(variations_rds_filename))
+  # List of tibbles with snp_id and variation
+  tibbles <- readRDS(variations_rds_filename)
+
   # Per i'th gene name, read its j'th SNPs and save the variations
   for (j in seq(1, n_snps)) {
     if (verbose) message(j, "/", n_snps, ": ", snps_filename)
 
-    # The SNPs working on that gene that we already know
-    t_snp_ids <- ncbiperegrine::read_snps_file(snps_filename)
-
-    # The variations we're about to obtain
-    testthat::expect_true(file.exists(variations_rds_filename))
-    # List of tibbles with snp_id and variation
-    tibbles <- readRDS(variations_rds_filename)
-
     if (length(tibbles) == n_snps &&
         tibble::is_tibble(utils::tail(tibbles, n = 1))) {
+      # TODO: output DONE
       next
     }
-
 
     # Per SNP, obtain the variation
     # Save to file after each SNP
     if (j <= length(tibbles)) {
       testthat::expect_true(tibble::is_tibble(tibbles[[j]]))
+      if (verbose) {
+        message("SNP ", j, "/", n_snps, ": already done")
+      }
       next
     }
 
