@@ -54,3 +54,35 @@ test_that("continue", {
   expect_true(file.exists(variations_rds_filename))
   expect_equal(n_snps, length(readRDS(variations_rds_filename)))
 })
+
+test_that("done all", {
+  # If the target RDS file has processed all SNPs,
+  # skip all SNPSs
+  folder_name <- tempfile()
+  dir.create(path = folder_name, showWarnings = FALSE, recursive = TRUE)
+  snps_filename <- file.path(folder_name, "7124_snps.csv")
+  file.copy(
+    from = system.file("extdata", "7124_snps.csv", package = "ncbiperegrine"),
+    to = snps_filename
+  )
+  variations_rds_filename <- file.path(folder_name, "7124_variations.rds")
+  file.copy(
+    from = system.file("extdata", "7124_variations.rds", package = "ncbiperegrine"),
+    to = variations_rds_filename
+  )
+  expect_true(file.exists(snps_filename))
+  expect_true(file.exists(variations_rds_filename))
+
+  n_sps_done <- length(readRDS(variations_rds_filename))
+  n_snps <- 1 # All done :-)
+  expect_message(
+    create_snp_variations_rds_file(
+      snps_filename = snps_filename,
+      n_snps = n_snps,
+      verbose = TRUE
+    ),
+    "Already processed 30 out of 1 SNPs"
+  )
+  expect_true(file.exists(variations_rds_filename))
+  expect_true(length(readRDS(variations_rds_filename)) > n_snps)
+})

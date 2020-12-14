@@ -29,15 +29,19 @@ create_snp_variations_rds_file <- function(
   # List of tibbles with snp_id and variation
   tibbles <- readRDS(variations_rds_filename)
 
+  if (length(tibbles) >= n_snps) {
+    if (verbose) {
+      message(
+        "Already processed ", length(tibbles), " out of ", n_snps, " SNPs"
+      )
+    }
+    return(variations_rds_filename)
+  }
+
   # Per i'th gene name, read its j'th SNPs and save the variations
   for (j in seq(1, n_snps)) {
     if (verbose) message(j, "/", n_snps, ": ", snps_filename)
 
-    if (length(tibbles) == n_snps &&
-        tibble::is_tibble(utils::tail(tibbles, n = 1))) {
-      # TODO: output DONE
-      next
-    }
 
     # Per SNP, obtain the variation
     # Save to file after each SNP
