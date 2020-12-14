@@ -51,7 +51,8 @@ test_that("skip existing topo files", {
 
   expect_message({
     topo_filenames <- create_topo_files(
-      fasta_filenames = fasta_filenames
+      fasta_filenames = fasta_filenames,
+      verbose = TRUE
     )
     },
     "Skip creating '.*.topo': it is already present"
