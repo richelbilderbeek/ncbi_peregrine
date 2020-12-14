@@ -35,7 +35,9 @@ test_that("continue", {
   )
   variations_rds_filename <- file.path(folder_name, "7124_variations.rds")
   file.copy(
-    from = system.file("extdata", "7124_variations.rds", package = "ncbiperegrine"),
+    from = system.file(
+      "extdata", "7124_variations.rds", package = "ncbiperegrine"
+    ),
     to = variations_rds_filename
   )
   expect_true(file.exists(snps_filename))
@@ -67,7 +69,9 @@ test_that("done all", {
   )
   variations_rds_filename <- file.path(folder_name, "7124_variations.rds")
   file.copy(
-    from = system.file("extdata", "7124_variations.rds", package = "ncbiperegrine"),
+    from = system.file(
+      "extdata", "7124_variations.rds", package = "ncbiperegrine"
+    ),
     to = variations_rds_filename
   )
   expect_true(file.exists(snps_filename))
