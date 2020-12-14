@@ -4,11 +4,13 @@
 \alias{create_topo_files}
 \title{Create the topology files from the FASTA files}
 \usage{
-create_topo_files(fasta_filenames)
+create_topo_files(fasta_filenames, verbose = FALSE)
 }
 \arguments{
 \item{fasta_filenames}{name of one or more FASTA files
 with protein sequences}
+
+\item{verbose}{set to TRUE for more output}
 }
 \description{
 Create the topology files from the FASTA files
