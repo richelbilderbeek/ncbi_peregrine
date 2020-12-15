@@ -11,7 +11,8 @@ create_gene_name_snps_files_is_done.txt: gene_names.csv
 
 create_snp_variations_rds_is_done.txt: create_gene_name_snps_files_is_done.txt
 	# Argument: the number of snps
-	Rscript create_snp_variations_rds.R 60
+	# Argument: verbose
+	Rscript create_snp_variations_rds.R 60 TRUE
 
 # Create the CSVs after all SNPs are saved as .rds
 # Can also be run by hand
