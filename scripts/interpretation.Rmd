@@ -15,6 +15,24 @@ Load the library:
 library(ncbiperegrine)
 ```
 
+```{r}
+n_membrane_proteins <- nrow(ncbiperegrine::read_genes_ids_file("gene_ids.csv"))
+```
+
+There are `r n_membrane_proteins` membrane proteins.
+
+```{r}
+snps_filenames <- list.files(path = ".", pattern = "_snps.csv")
+n_snps <- nrow(ncbiperegrine::read_snps_files(snps_filenames))
+n_snps_per_gene <- n_snps / length(snps_filenames)
+```
+
+On average, there are `r format(n_snps_per_gene, scientific = FALSE)` SNPs 
+per membrane protein.
+Of these approximately 18k per membrane protein,
+we can only do few, as the NCBI API
+is limited to three calls per second.
+
 Read the raw results:
 
 ```{r}
@@ -27,46 +45,86 @@ This is how the results look like:
 knitr::kable(head(results))
 ```
 
-There are this number of variations:
 
 ```{r}
-cat(nrow(results))
+n_membrane_proteins_with_tmh <- length(
+  unique(
+    dplyr::filter(
+      results,
+      p_in_tmh > 0.0
+    )$gene_id
+  )
+)
 ```
 
-Remove the results with NAs:
+The are `r n_membrane_proteins_with_tmh` membrane proteins with a TMH.
+
+```{r}
+n_variations <- nrow(results)
+```
+
+There are `r n_variations` variations. However,
+not all variations are one-nucleotide 
+subtitutions.
+
+To keep only the variations with one-nucleotide 
+subtitutions, remove the results with NAs:
 
 ```{r}
 results <- na.omit(results)
-cat(nrow(results))
+n_variations <- nrow(results)
 ```
 
-
-Remove duplicated variations:
+There are `r n_variations` variations with a one-nucleotide 
+subtitutions, of which the varations can be duplicates.
 
 ```{r}
 results <- dplyr::distinct(results, variation, .keep_all = TRUE)
-cat(nrow(results))
+n_variations <- nrow(results)
 ```
-The expect number of variations in TMHs:
+
+Hence, there are `r n_variations` unique variations with a one-nucleotide  subtitutions.
+
+We only sampled a small subset of of SNPs:
+
+```{r}
+n_snps_sampled <- length(unique(results$snp_id))
+n_snps_per_gene_sampled <- n_snps_sampled / length(unique(results$gene_id))
+f_sampled <- n_snps_per_gene_sampled / n_snps_per_gene
+```
+
+That is, we  have sampled `r format(n_snps_per_gene_sampled, scientific = FALSE)` SNPs per gene ID, which is only
+a fraction of `r format(f_sampled, scientific = FALSE)`,
+or `r format(100.0 * f_sampled, scientific = FALSE)` percent.
+
+The expected number of variations in TMHs can be calculated
+by summing all probabilities of occuring in a
+TMH:
 
 ```{r}
 expect_n_variations_in_tmhs <- sum(results$p_in_tmh)
-cat(expect_n_variations_in_tmhs)
 ```
-The actual number of variations in TMHs:
+
+Hence, if SNPs occur just as likely in TMH
+as around these, we expect `r expect_n_variations_in_tmhs`
+variations to occur in TMHs.
 
 ```{r}
 actual_n_variations_in_tmhs <- sum(results$is_in_tmh)
-cat(actual_n_variations_in_tmhs)
 ```
+
+The actual number of variations in TMHs is `r actual_n_variations_in_tmhs`.
+
+Is this number as expected by chance?
 
 ```{r}
 p_value <- poisbinom::ppoisbinom(
   q = actual_n_variations_in_tmhs,
   pp = results$p_in_tmh
 )
-print(p_value)
 ```
+
+The p value is `r p_value`.
 
 ```{r}
 if (p_value < 0.05) {
@@ -75,5 +133,22 @@ if (p_value < 0.05) {
     "signficantly lower than expected by chance,",
     "hence TMHs are evolutionarily conserved"
   )  
+} else {
+  cat(
+    "Number of variations in TMHs",
+    "is as expected by chance,",
+    "hence TMHs are not evolutionarily conserved"
+  )  
 }
 ```
+
+Let's calculate how strong this evolutionary conservation
+is:
+
+```{r}
+relative_conservation <- actual_n_variations_in_tmhs / expect_n_variations_in_tmhs
+```
+
+The relative conservation is `r relative_conservation`,
+which means that for 1 SNP that work in non-TMH,
+there are only `r relative_conservation` SNPs in TMHs.
