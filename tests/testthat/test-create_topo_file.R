@@ -151,6 +151,59 @@ test_that("Continue from some known sequences", {
   )
 })
 
+test_that("Continue from zero known sequences", {
+  if (!pureseqtmr::is_pureseqtm_installed()) return()
+  folder_name <- tempfile()
+  dir.create(path = folder_name, showWarnings = FALSE, recursive = TRUE)
+  fasta_filename <- tempfile(tmpdir = folder_name, fileext = ".fasta")
+  file.copy(
+    from = system.file(
+      "extdata",
+      "1956.fasta",
+      package = "ncbiperegrine"
+    ),
+    to = fasta_filename
+  )
+  expect_true(file.exists(fasta_filename))
+  topo_filename <- stringr::str_replace(
+    string = fasta_filename,
+    pattern = ".fasta",
+    replacement = ".topo"
+  )
+  file.copy(
+    from = system.file(
+      "extdata",
+      "1956.topo",
+      package = "ncbiperegrine"
+    ),
+    to = topo_filename
+  )
+  expect_true(file.exists(topo_filename))
+
+  # Verify that test if already done
+  t_fasta <- pureseqtmr::load_fasta_file_as_tibble(fasta_filename)
+  t_topo <- pureseqtmr::load_fasta_file_as_tibble(topo_filename)
+
+  # Of the FASTA file, only keep the first two
+  pureseqtmr::save_tibble_as_fasta_file(
+    t = pureseqtmr::load_fasta_file_as_tibble(fasta_filename)[1:2, ],
+    fasta_filename = fasta_filename
+  )
+  # Of the topology, remove all predictions
+  pureseqtmr::save_tibble_as_fasta_file(
+    t = pureseqtmr::load_fasta_file_as_tibble(topo_filename)[c(), ],
+    fasta_filename = topo_filename
+  )
+
+  expect_message(
+    create_topo_file(
+      fasta_filename = fasta_filename,
+      verbose = TRUE
+    ),
+    "Predicting an additional 2 topologies from 2 sequences"
+  )
+})
+
 test_that("Script crash", {
   if (!pureseqtmr::is_pureseqtm_installed()) return()
   scripts_path <- "~/GitHubs/ncbi_peregrine/scripts"
