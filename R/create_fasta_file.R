@@ -17,6 +17,17 @@ create_fasta_file <- function(
   t_variations <- ncbiperegrine::read_variations_csv_file(
     variations_csv_filename = variations_csv_filename
   )
+
+  if (nrow(t_variations) == 0) {
+    if (verbose) {
+      message("Zero variations results in zero protein sequences to look up")
+    }
+    # There were none protein sequence to fetch ...
+    # Create an empty file
+    readr::write_lines(x = c(), fasta_filename)
+    return(fasta_filename)
+  }
+
   # There may be duplicates in 'protein_id'
   # These are kept, to ensure tables have the same number of rows
   t_sequences <- tibble::tibble(
@@ -35,37 +46,34 @@ create_fasta_file <- function(
   }
   testthat::expect_equal(nrow(t_variations), nrow(t_sequences))
 
-  # If there is some protein sequence to fetch ...
-  # this may be false, as, when using only few SNPs, not all proteins get SNPs
-  if (sum(is.na(t_sequences$sequence)) > 0) {
-
+  n_todo <- sum(is.na(t_sequences$sequence))
+  if (n_todo == 0) {
     if (verbose) {
-      n_skip <- sum(!is.na(t_sequences$sequence))
-      message(
-        "Skipping ", n_skip, " variation as protein sequence is already known"
-      )
+      message("Already fetched all ", nrow(t_sequences), " protein sequences")
     }
-
-    indices <- which(is.na(t_sequences$sequence))
-    sequences <- sprentrez::fetch_sequences_from_protein_ids(
-      t_sequences$protein_id[indices]
-    )
-    testthat::expect_equal(length(indices), length(sequences))
-    # Note that 'names(sequences)' contains the full names again
-    t_sequences$sequence[indices] <- sequences
-
-    # All NAs are filled up now!
-    testthat::expect_equal(0, sum(is.na(t_sequences$sequence)))
-
-    # Convert to FASTA file
-    pureseqtmr::save_tibble_as_fasta_file(
-      t = t_sequences,
-      fasta_filename = fasta_filename
-    )
-  } else {
-    # There were none protein sequence to fetch ...
-    # Create an empty file
-    readr::write_lines(x = c(), fasta_filename)
+    return(fasta_filename)
   }
+  if (verbose) {
+    message(
+      "Fetching ", n_todo, "/", nrow(t_sequences), " new protein sequences"
+    )
+  }
+
+  indices <- which(is.na(t_sequences$sequence))
+  sequences <- sprentrez::fetch_sequences_from_protein_ids(
+    t_sequences$protein_id[indices]
+  )
+  testthat::expect_equal(length(indices), length(sequences))
+  # Note that 'names(sequences)' contains the full names again
+  t_sequences$sequence[indices] <- sequences
+
+  # All NAs are filled up now!
+  testthat::expect_equal(0, sum(is.na(t_sequences$sequence)))
+
+  # Convert to FASTA file
+  pureseqtmr::save_tibble_as_fasta_file(
+    t = t_sequences,
+    fasta_filename = fasta_filename
+  )
   fasta_filename
 }

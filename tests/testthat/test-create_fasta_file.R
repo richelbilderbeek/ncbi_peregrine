@@ -60,6 +60,27 @@ test_that("Peregrine crash 2020-12-09", {
   )
 })
 
+test_that("FASTA file gets skipped if there are no protein sequences", {
+
+  # Copy only 0 variations
+  variations_csv_filename <- tempfile(fileext = "_variations.csv")
+  t_variations <- read_variations_csv_file(
+      system.file("extdata", "7216_variations.csv", package = "ncbiperegrine")
+  )
+  readr::write_csv(x = t_variations[c(), ], file = variations_csv_filename)
+  expect_true(file.exists(variations_csv_filename))
+  expect_equal(0, nrow(read_variations_csv_file(variations_csv_filename)))
+
+  # Create the FASTA file again
+  expect_message(
+    create_fasta_file(
+      variations_csv_filename = variations_csv_filename,
+      verbose = TRUE
+    ),
+    "Zero variations results in zero protein sequences to look up"
+  )
+})
+
 test_that("FASTA file gets updated with more variants", {
 
   # Copy only 2 variations
@@ -77,10 +98,10 @@ test_that("FASTA file gets updated with more variants", {
   )
   expect_true(file.exists(fasta_filename))
 
-  # Add 2 more variations
-  readr::write_csv(x = t_variations[1:4, ], file = variations_csv_filename)
+  # Add 1 more variation
+  readr::write_csv(x = t_variations[1:3, ], file = variations_csv_filename)
   expect_true(file.exists(variations_csv_filename))
-  expect_equal(4, nrow(read_variations_csv_file(variations_csv_filename)))
+  expect_equal(3, nrow(read_variations_csv_file(variations_csv_filename)))
 
   # Update the FASTA file
   expect_message(
@@ -88,8 +109,36 @@ test_that("FASTA file gets updated with more variants", {
       variations_csv_filename = variations_csv_filename,
       verbose = TRUE
     ),
-    "Skipping 2 variation as protein sequence is already known"
+    "Fetching 1/3 new protein sequences"
   )
   expect_true(file.exists(fasta_filename))
 
+})
+
+test_that("FASTA file gets skipped if all proteins sequences are known", {
+
+  # Copy only 2 variations
+  variations_csv_filename <- tempfile(fileext = "_variations.csv")
+  t_variations <- read_variations_csv_file(
+      system.file("extdata", "7216_variations.csv", package = "ncbiperegrine")
+  )
+  readr::write_csv(x = t_variations[1:2, ], file = variations_csv_filename)
+  expect_true(file.exists(variations_csv_filename))
+  expect_equal(2, nrow(read_variations_csv_file(variations_csv_filename)))
+
+  # Create a FASTA file
+  expect_silent(
+    create_fasta_file(
+      variations_csv_filename = variations_csv_filename
+    )
+  )
+
+  # Create the FASTA file again
+  expect_message(
+    create_fasta_file(
+      variations_csv_filename = variations_csv_filename,
+      verbose = TRUE
+    ),
+    "Already fetched all 2 protein sequences"
+  )
 })
