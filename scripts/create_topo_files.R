@@ -1,5 +1,6 @@
 ncbiperegrine::create_topo_files(
-  fasta_filenames = list.files(pattern = "\\.fasta")
+  fasta_filenames = list.files(pattern = "\\.fasta"),
+  verbose = TRUE
 )
 
 readr::write_lines(
