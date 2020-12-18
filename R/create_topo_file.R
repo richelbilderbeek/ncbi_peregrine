@@ -44,12 +44,23 @@ create_topo_file <- function(
   }
 
   # Continue with known topologies
-  t_topology <- tibble::add_row(
-    t_topology,
-    name = t_sequences$name[-seq_len(length(t_topology$name))],
-    sequence = ""
-  )
-  indices <- which(is.na(t_topology$sequence))
+  if (length(t_topology$name) == 0) {
+    t_topology <- tibble::tibble(
+      name = t_sequences$name,
+      sequence = ""
+    )
+  } else {
+    # Append
+    t_topology <- tibble::add_row(
+      t_topology,
+      name = t_sequences$name[-seq_len(length(t_topology$name))],
+      sequence = ""
+    )
+  }
+
+  testthat::expect_equal(nrow(t_topology), nrow(t_sequences))
+  indices <- which(t_topology$sequence == "")
+  testthat::expect_true(length(indices) > 0)
 
   if (verbose) {
     message(
