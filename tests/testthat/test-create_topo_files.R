@@ -29,7 +29,6 @@ test_that("use", {
     fasta_filename = fasta_filenames[2]
   )
 
-
   topo_filenames <- create_topo_files(
     fasta_filenames = fasta_filenames
   )

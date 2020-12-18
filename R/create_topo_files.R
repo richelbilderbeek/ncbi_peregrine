@@ -13,6 +13,9 @@ create_topo_files <- function(
   )
 
   for (i in seq_len(n_fasta_filenames)) {
+    if (verbose) {
+      message(i, "/", n_fasta_filenames, ": ", fasta_filenames[i])
+    }
 
     topo_filename <- ncbiperegrine::create_topo_file(
       fasta_filename = fasta_filenames[i],

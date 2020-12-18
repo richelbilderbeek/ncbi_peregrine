@@ -150,3 +150,26 @@ test_that("Continue from some known sequences", {
     "Predicting an additional 1 topologies from 4 sequences"
   )
 })
+
+test_that("Script crash", {
+  if (!pureseqtmr::is_pureseqtm_installed()) return()
+  scripts_path <- "~/GitHubs/ncbi_peregrine/scripts"
+  folder_name <- tempfile()
+  dir.create(path = folder_name, showWarnings = FALSE, recursive = TRUE)
+  fasta_filename <- file.path(folder_name, "10004.fasta")
+  file.copy(
+    from = file.path(scripts_path, "10004.fasta"),
+    to = fasta_filename
+  )
+  expect_true(file.exists(fasta_filename))
+  topo_filename <- file.path(dirname(fasta_filename), "10004.topo")
+  file.copy(
+    from = file.path(scripts_path, "10004.topo"),
+    to = topo_filename
+  )
+  expect_true(file.exists(fasta_filename))
+
+  create_topo_file(
+    fasta_filename = fasta_filename
+  )
+})

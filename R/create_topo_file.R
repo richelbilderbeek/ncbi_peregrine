@@ -47,7 +47,7 @@ create_topo_file <- function(
   t_topology <- tibble::add_row(
     t_topology,
     name = t_sequences$name[-seq_len(length(t_topology$name))],
-    sequence = NA
+    sequence = ""
   )
   indices <- which(is.na(t_topology$sequence))
 
