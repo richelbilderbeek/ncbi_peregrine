@@ -2,7 +2,8 @@
 #' @inheritParams default_params_doc
 #' @export
 create_fasta_file <- function(
-  variations_csv_filename
+  variations_csv_filename,
+  verbose = FALSE
 ) {
   testthat::expect_true(file.exists(variations_csv_filename))
 
@@ -24,14 +25,37 @@ create_fasta_file <- function(
     ),
     sequence = NA
   )
+
+  # Add sequences if these are already known
+  if (file.exists(fasta_filename)) {
+    t_known <- pureseqtmr::load_fasta_file_as_tibble(fasta_filename)
+    known_sequences <- t_known$sequence
+    n_known <- length(known_sequences)
+    t_sequences$sequence[seq_len(n_known)] <- known_sequences
+  }
   testthat::expect_equal(nrow(t_variations), nrow(t_sequences))
-  if (nrow(t_sequences) > 0) {
+
+  # If there is some protein sequence to fetch ...
+  # this may be false, as, when using only few SNPs, not all proteins get SNPs
+  if (sum(is.na(t_sequences$sequence)) > 0) {
+
+    if (verbose) {
+      n_skip <- sum(!is.na(t_sequences$sequence))
+      message(
+        "Skipping ", n_skip, " variation as protein sequence is already known"
+      )
+    }
+
+    indices <- which(is.na(t_sequences$sequence))
     sequences <- sprentrez::fetch_sequences_from_protein_ids(
-      t_sequences$protein_id
+      t_sequences$protein_id[indices]
     )
-    testthat::expect_equal(length(t_sequences$protein_id), length(sequences))
+    testthat::expect_equal(length(indices), length(sequences))
     # Note that 'names(sequences)' contains the full names again
-    t_sequences$sequence <- sequences
+    t_sequences$sequence[indices] <- sequences
+
+    # All NAs are filled up now!
+    testthat::expect_equal(0, sum(is.na(t_sequences$sequence)))
 
     # Convert to FASTA file
     pureseqtmr::save_tibble_as_fasta_file(
@@ -39,6 +63,7 @@ create_fasta_file <- function(
       fasta_filename = fasta_filename
     )
   } else {
+    # There were none protein sequence to fetch ...
     # Create an empty file
     readr::write_lines(x = c(), fasta_filename)
   }

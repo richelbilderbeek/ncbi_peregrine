@@ -4,11 +4,13 @@
 \alias{create_fasta_file}
 \title{Create a FASTA file with the sequences for each variation}
 \usage{
-create_fasta_file(variations_csv_filename)
+create_fasta_file(variations_csv_filename, verbose = FALSE)
 }
 \arguments{
 \item{variations_csv_filename}{name of a \code{[gene_name]_variations.csv}
 file}
+
+\item{verbose}{set to TRUE for more output}
 }
 \description{
 Create a FASTA file with the sequences for each variation

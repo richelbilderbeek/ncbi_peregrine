@@ -59,3 +59,37 @@ test_that("Peregrine crash 2020-12-09", {
     )
   )
 })
+
+test_that("FASTA file gets updated with more variants", {
+
+  # Copy only 2 variations
+  variations_csv_filename <- tempfile(fileext = "_variations.csv")
+  t_variations <- read_variations_csv_file(
+      system.file("extdata", "7216_variations.csv", package = "ncbiperegrine")
+  )
+  readr::write_csv(x = t_variations[1:2, ], file = variations_csv_filename)
+  expect_true(file.exists(variations_csv_filename))
+  expect_equal(2, nrow(read_variations_csv_file(variations_csv_filename)))
+
+  # Create a FASTA file
+  fasta_filename <- create_fasta_file(
+    variations_csv_filename = variations_csv_filename
+  )
+  expect_true(file.exists(fasta_filename))
+
+  # Add 2 more variations
+  readr::write_csv(x = t_variations[1:4, ], file = variations_csv_filename)
+  expect_true(file.exists(variations_csv_filename))
+  expect_equal(4, nrow(read_variations_csv_file(variations_csv_filename)))
+
+  # Update the FASTA file
+  expect_message(
+    fasta_filename <- create_fasta_file(
+      variations_csv_filename = variations_csv_filename,
+      verbose = TRUE
+    ),
+    "Skipping 2 variation as protein sequence is already known"
+  )
+  expect_true(file.exists(fasta_filename))
+
+})

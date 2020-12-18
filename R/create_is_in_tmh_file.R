@@ -25,6 +25,9 @@ create_is_in_tmh_file <- function(
 
   # The topo filename
   t_topo  <- pureseqtmr::load_fasta_file_as_tibble(topo_filename)
+
+  # If not, the topo file may need to be updated, which probably
+  # means that the FASTA file needs to be updated
   testthat::expect_equal(nrow(t_variations), nrow(t_topo))
 
   if (nrow(t_topo) == 0) {

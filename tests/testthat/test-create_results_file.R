@@ -32,3 +32,16 @@ test_that("use", {
   # All variations are unique
   expect_equal(length(t_results), length(unique(t_results)))
 })
+
+test_that("use", {
+  skip("https://github.com/richelbilderbeek/bbbq_article/issues/134")
+  expect_silent(
+    ncbiperegrine::create_results_file(
+      is_in_tmh_filenames = list.files(
+        path = "~/GitHubs/ncbi_peregrine/scripts",
+        pattern = "_is_in_tmh\\.csv",
+        full.names = TRUE
+      )[1:2]
+    )
+  )
+})

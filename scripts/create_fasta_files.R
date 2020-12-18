@@ -1,5 +1,6 @@
 ncbiperegrine::create_fasta_files(
-  variations_csv_filenames = list.files(pattern = "_variations\\.csv")
+  variations_csv_filenames = list.files(pattern = "_variations\\.csv"),
+  verbose = TRUE
 )
 
 readr::write_lines(

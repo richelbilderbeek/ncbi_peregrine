@@ -158,6 +158,12 @@ create_results_file <- function(
   #                                      [gene_name]_is_in_tmh.csv
 
   t_is_in_tmh <- read_is_in_tmh_files(is_in_tmh_filenames)
+  #readLines(is_in_tmh_filenames[1])
+  #readLines(is_in_tmh_filenames[2])
+
+  #all(t_is_in_tmh$variation %in% t_results_2$variation)
+  #all(t_results_2$variation %in% t_is_in_tmh$variation)
+  t_results_2$variation[ !(t_results_2$variation %in% t_is_in_tmh$variation) ]
 
   t_results <- dplyr::inner_join(
     x = t_results_2,

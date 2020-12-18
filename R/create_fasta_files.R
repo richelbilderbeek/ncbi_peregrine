@@ -23,7 +23,8 @@ create_fasta_files <- function(
       next
     }
     fasta_filename <- ncbiperegrine::create_fasta_file(
-      variations_csv_filename = variations_csv_filenames[i]
+      variations_csv_filename = variations_csv_filenames[i],
+      verbose = verbose
     )
     testthat::expect_equal(fasta_filename, fasta_filenames[i])
   }
