@@ -13,14 +13,10 @@ create_fasta_files <- function(
   )
 
   for (i in seq_len(n_variations_csv_filenames)) {
-    if (file.exists(fasta_filenames[i])) {
-      if (verbose) {
-        message(
-          "Skip creating '", fasta_filenames[i], "': ",
-          "it is already present"
-        )
-      }
-      next
+    if (verbose) {
+      message(
+        i, "/", n_variations_csv_filenames, ": ", fasta_filenames[i]
+      )
     }
     fasta_filename <- ncbiperegrine::create_fasta_file(
       variations_csv_filename = variations_csv_filenames[i],
