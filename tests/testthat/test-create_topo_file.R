@@ -205,19 +205,20 @@ test_that("Continue from zero known sequences", {
 })
 
 test_that("Script crash", {
+  skip("Local only")
   if (!pureseqtmr::is_pureseqtm_installed()) return()
   scripts_path <- "~/GitHubs/ncbi_peregrine/scripts"
   folder_name <- tempfile()
   dir.create(path = folder_name, showWarnings = FALSE, recursive = TRUE)
-  fasta_filename <- file.path(folder_name, "10004.fasta")
+  fasta_filename <- file.path(folder_name, "100505989.fasta")
   file.copy(
-    from = file.path(scripts_path, "10004.fasta"),
+    from = file.path(scripts_path, "100505989.fasta"),
     to = fasta_filename
   )
   expect_true(file.exists(fasta_filename))
-  topo_filename <- file.path(dirname(fasta_filename), "10004.topo")
+  topo_filename <- file.path(dirname(fasta_filename), "100505989.topo")
   file.copy(
-    from = file.path(scripts_path, "10004.topo"),
+    from = file.path(scripts_path, "100505989.topo"),
     to = topo_filename
   )
   expect_true(file.exists(fasta_filename))

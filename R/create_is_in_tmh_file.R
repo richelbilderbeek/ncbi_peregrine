@@ -70,7 +70,7 @@ create_is_in_tmh_file <- function(
           # Valid reasons to skip
           testthat::expect_match(
             e$message,
-            "Do not accept (frame shifts|extensions|insertions|deletions|delins|duplications)" # nolint indeed a long error regexp
+            "Do not accept (frame shifts|extensions|insertions|deletions|delins|duplications|repeated sequences)" # nolint indeed a long error regexp
           )
         }
       )
