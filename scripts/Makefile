@@ -34,6 +34,10 @@ results.csv: create_is_in_tmh_files_is_done.txt
 clean:
 	rm -f *.csv *.txt *.rds *.fasta *.topo *.log *.zip
 
+# Redo the pipeline, conserving all that is already known
+redo:
+	rm *.txt gene_ids.csv
+
 zip:
 	zip ncbi_peregrine_data.zip *.csv *.txt *.rds *.fasta *.topo *.log *.R Makefile *.sh
 

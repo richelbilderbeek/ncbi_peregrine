@@ -214,4 +214,5 @@ gene_id|gene_name|snp_id    |variation              |is_in_tmh|p_in_tmh
 ## Downloads
 
  * 30 SNPs per gene ID: [ncbi_peregrine_data_20201214.zip](http://richelbilderbeek.nl/ncbi_peregrine_data_20201214.zip)
+ * 60 SNPs per gene ID: [ncbi_peregrine_data_20201219.zip](http://richelbilderbeek.nl/ncbi_peregrine_data_20201219.zip)
 
