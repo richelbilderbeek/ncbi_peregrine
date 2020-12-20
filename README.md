@@ -210,9 +210,37 @@ gene_id|gene_name|snp_id    |variation              |is_in_tmh|p_in_tmh
  * 8 seconds per gene ID, 
  * Must be done in sequence for NCBI
  * 8 seconds * 1123 jobs = 9000 secs = 150 mins = 3 hours
- 
+
+In reality:
+
+```
+real	63m32.145s
+user	49m42.254s
+sys	0m31.846s
+```
+
+```
+real	61m2.904s
+user	44m32.908s
+sys	0m28.639s
+``` 
+
+```
+real	63m14.851s
+user	47m47.423s
+sys	0m32.378s
+```
+
+```
+real	63m25.927s
+user	45m41.377s
+sys	0m29.540s
+```
+
 ## Downloads
 
  * 30 SNPs per gene ID: [ncbi_peregrine_data_20201214.zip](http://richelbilderbeek.nl/ncbi_peregrine_data_20201214.zip)
  * 60 SNPs per gene ID: [ncbi_peregrine_data_20201219.zip](http://richelbilderbeek.nl/ncbi_peregrine_data_20201219.zip)
+
+
 
