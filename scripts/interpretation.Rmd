@@ -15,11 +15,15 @@ Load the library:
 library(ncbiperegrine)
 ```
 
+## Data
+
+Here, I'll discuss the data and its size.
+
 ```{r}
 n_membrane_proteins <- nrow(ncbiperegrine::read_genes_ids_file("gene_ids.csv"))
 ```
 
-There are `r n_membrane_proteins` membrane proteins.
+There are `r n_membrane_proteins` membrane proteins in our group of membrane-associated proteins.
 
 ```{r}
 snps_filenames <- list.files(path = ".", pattern = "_snps.csv")
@@ -29,7 +33,7 @@ n_snps_per_gene <- n_snps / length(snps_filenames)
 
 On average, there are `r format(n_snps_per_gene, scientific = FALSE)` SNPs 
 per membrane protein.
-Of these approximately 18k per membrane protein,
+Of these, approximately 18k per membrane protein,
 we can only do few, as the NCBI API
 is limited to three calls per second.
 
@@ -63,20 +67,31 @@ The are `r n_membrane_proteins_with_tmh` membrane proteins with a TMH.
 n_variations <- nrow(results)
 ```
 
-There are `r n_variations` variations. However,
-not all variations are one-nucleotide 
-subtitutions.
+There are `r n_variations` variations, in which a
+variation is defined as a change at 
+the DNA, RNA or protein level. For example,
+the variation `NP_001333827.1:p.Cys1115Gly`
+denotes an amino acid substitution.
+In this pipeline, we already selected for changes
+at the protein level.
 
-To keep only the variations with one-nucleotide 
-subtitutions, remove the results with NAs:
+However, not all variations are one-nucleotide 
+subtitutions. For example, `NP_001333827.1:p.Val1095fs`
+denotes a frame shift, that resulted in one or more
+changes at the protein level.  We chose to focus
+on only one-nucleotide 
+subtitutions, as these changes only have a local effect.
+
+To keep only the variations with
+one-nucleotide subtitutions, remove the results with NAs:
 
 ```{r}
 results <- na.omit(results)
 n_variations <- nrow(results)
 ```
 
-There are `r n_variations` variations with a one-nucleotide 
-subtitutions, of which the varations can be duplicates.
+There are `r n_variations` variations with a one-residue 
+substitution, of which the varations can be duplicates.
 
 ```{r}
 results <- dplyr::distinct(results, variation, .keep_all = TRUE)
@@ -84,6 +99,8 @@ n_variations <- nrow(results)
 ```
 
 Hence, there are `r n_variations` unique variations with a one-nucleotide  subtitutions.
+
+## Sampling
 
 We only sampled a small subset of of SNPs:
 
@@ -97,16 +114,28 @@ That is, we  have sampled `r format(n_snps_per_gene_sampled, scientific = FALSE)
 a fraction of `r format(f_sampled, scientific = FALSE)`,
 or `r format(100.0 * f_sampled, scientific = FALSE)` percent.
 
-The expected number of variations in TMHs can be calculated
-by summing all probabilities of occuring in a
-TMH:
+## Statistics
+
+What is the chance that we find this number of
+amino acids substitutions in our dataset?
+
+Would a variations occur just as likely in TMH
+as well as in solvent exposed regions,
+the chance it is in a TMH equals the percentage
+of its protein being TMH.
+
+Hence, for all variations, 
+the **expected** number of variations in TMHs 
+can be calculated by summing 
+the percentages of the potein they work on being TMH :
 
 ```{r}
 expect_n_variations_in_tmhs <- sum(results$p_in_tmh)
 ```
 
 Hence, if SNPs occur just as likely in TMH
-as around these, we expect `r expect_n_variations_in_tmhs`
+as in a soluble region of the protein, 
+we expect `r expect_n_variations_in_tmhs`
 variations to occur in TMHs.
 
 ```{r}
@@ -115,7 +144,9 @@ actual_n_variations_in_tmhs <- sum(results$is_in_tmh)
 
 The actual number of variations in TMHs is `r actual_n_variations_in_tmhs`.
 
-Is this number as expected by chance?
+What is the chance that this number is observed, 
+if the variations would be randomly distributed 
+over the proteins:
 
 ```{r}
 p_value <- poisbinom::ppoisbinom(
