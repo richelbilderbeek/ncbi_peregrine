@@ -158,6 +158,12 @@ create_results_file <- function(
   #                                      [gene_name]_is_in_tmh.csv
 
   t_is_in_tmh <- read_is_in_tmh_files(is_in_tmh_filenames)
+
+  # If is_in_tmh is TRUE or FALSE,
+  # then the p_in_tmh must be in range [0,1]
+  testthat::expect_equal(0, sum(!is.na(t_is_in_tmh$is_in_tmh) & is.na(t_is_in_tmh$p_in_tmh)))
+
+  t_is_in_tmh
   #readLines(is_in_tmh_filenames[1])
   #readLines(is_in_tmh_filenames[2])
 
@@ -165,12 +171,17 @@ create_results_file <- function(
   #all(t_results_2$variation %in% t_is_in_tmh$variation)
   t_results_2$variation[ !(t_results_2$variation %in% t_is_in_tmh$variation) ]
 
-  t_results <- dplyr::inner_join(
+  t_results <- dplyr::full_join(
     x = t_results_2,
     y = t_is_in_tmh,
     by = "variation"
   )
   testthat::expect_equal(nrow(t_results_2), nrow(t_is_in_tmh))
+
+  # If is_in_tmh is TRUE or FALSE,
+  # then the p_in_tmh must be in range [0,1]
+  # There is an error for e.g. variation NP_001170990.1:p.Gly254Arg
+  testthat::expect_equal(0, sum(!is.na(t_results$is_in_tmh) & is.na(t_results$p_in_tmh)))
 
   readr::write_csv(x = t_results, file = results_filename)
   results_filename

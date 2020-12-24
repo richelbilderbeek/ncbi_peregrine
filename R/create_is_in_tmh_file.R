@@ -47,7 +47,7 @@ create_is_in_tmh_file <- function(
     )
 
     # Determine in_in_tmh
-    for (variation_index in seq(1, nrow(t_is_in_tmh))) {
+    for (variation_index in seq_len(nrow(t_is_in_tmh))) {
       if (verbose) {
         message(
           variation_index, "/", nrow(t_is_in_tmh), ": ",
@@ -60,11 +60,13 @@ create_is_in_tmh_file <- function(
         )
         if (this_variation$from != this_variation$to) {
           pos <- this_variation$pos
+          # Is a 1 or 0 at that spot?
           t_is_in_tmh$is_in_tmh[variation_index] <- "1" == stringr::str_sub(
-            t_topo$sequence[variation_index], pos, pos)
-              # Determine p_in_tmh
-            t_is_in_tmh$p_in_tmh <- stringr::str_count(t_topo$sequence, "1") /
-                nchar(t_topo$sequence)
+            t_topo$sequence[variation_index], pos, pos
+          )
+          # Determine p_in_tmh
+          t_is_in_tmh$p_in_tmh[variation_index] <- stringr::str_count(t_topo$sequence, "1") /
+              nchar(t_topo$sequence)
         }
       }, error = function(e) {
           # Valid reasons to skip

@@ -88,8 +88,7 @@ test_that("skip existing is_in_tmh files", {
     create_is_in_tmh_files(
       topo_filenames = topo_filenames,
       verbose = TRUE
-    ),
-    "Skip creating '.*_is_in_tmh.csv': it is already present"
+    )
   )
 
   # 2nd is_in_tmh file is now created

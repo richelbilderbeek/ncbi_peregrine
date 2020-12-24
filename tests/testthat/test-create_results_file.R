@@ -35,13 +35,14 @@ test_that("use", {
 
 test_that("use", {
   skip("https://github.com/richelbilderbeek/bbbq_article/issues/134")
-  expect_silent(
-    ncbiperegrine::create_results_file(
-      is_in_tmh_filenames = list.files(
-        path = "~/GitHubs/ncbi_peregrine/scripts",
-        pattern = "_is_in_tmh\\.csv",
-        full.names = TRUE
-      )[1:2]
-    )
+  results_filename <- ncbiperegrine::create_results_file(
+    is_in_tmh_filenames = list.files(
+      path = "~/GitHubs/ncbi_peregrine/scripts",
+      pattern = "_is_in_tmh\\.csv",
+      full.names = TRUE
+    )[30]
   )
+  t <- readr::read_csv(results_filename)
+  testthat::expect_equal(0, sum(!is.na(t$is_in_tmh) & is.na(t$p_in_tmh)))
+  t
 })

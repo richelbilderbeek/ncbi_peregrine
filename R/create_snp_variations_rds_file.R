@@ -56,7 +56,10 @@ create_snp_variations_rds_file <- function(
     if (nrow(t_snp_ids) != 0) {
       # There are SNP IDs
       snp_id <- t_snp_ids$snp_id[j]
-      variations <- ncbi::get_snp_variations_in_protein_from_snp_id(snp_id)
+
+      variations <- ncbi::get_snp_variations_in_protein_from_snp_id(
+        format(snp_id, scientific = FALSE)
+      )
       tibbles[[j]] <- tibble::tibble(
         snp_id = snp_id,
         variation = variations,
