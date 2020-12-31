@@ -14,10 +14,10 @@ Experiment
   5. Per variation that changes the protein structure, score the topology
 
 
-Gene ID|Gene name|SNP ID    |variation              |is_in_tmh
--------|---------|----------|-----------------------|---------
-7124   |TNF      |1583049783|NP_000585.2:p.Gly144Asp|FALSE
-.      |.        |Another   |NP_000585.2:p.Gly144Asp|FALSE
+Gene ID|Gene name|SNP ID    |variation              |is_in_tmh|p_is_tmh
+-------|---------|----------|-----------------------|---------|--------
+7124   |TNF      |1583049783|NP_000585.2:p.Gly144Asp|FALSE    |0.1
+.      |.        |Another   |NP_000585.2:p.Gly144Asp|FALSE    |0.2
 
 ## Files
 
