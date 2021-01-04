@@ -56,7 +56,10 @@ test_that("continue", {
     "SNP 30/31: already done"
   )
   expect_true(file.exists(variations_rds_filename))
-  expect_equal(n_snps, length(read_variations_rds_file(variations_rds_filename)))
+  expect_equal(
+    n_snps,
+    length(read_variations_rds_file(variations_rds_filename))
+  )
 })
 
 test_that("done all", {
@@ -92,7 +95,9 @@ test_that("done all", {
   expect_true(file.exists(variations_rds_filename))
   expect_true(
     length(
-      read_variations_rds_file(variations_rds_filename = variations_rds_filename)
+      read_variations_rds_file(
+        variations_rds_filename = variations_rds_filename
+      )
     ) > n_snps
   )
 })
