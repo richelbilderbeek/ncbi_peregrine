@@ -40,8 +40,10 @@ test_that("use", {
       path = "~/GitHubs/ncbi_peregrine/scripts",
       pattern = "_is_in_tmh\\.csv",
       full.names = TRUE
-    )[30]
+    )[444]
   )
+  t_is_in_tmh <- read_is_in_tmh_file(is_in_tmh_filenames[1])
+  read_is_in_tmh_files(is_in_tmh_filenames)
   t <- readr::read_csv(results_filename)
   testthat::expect_equal(0, sum(!is.na(t$is_in_tmh) & is.na(t$p_in_tmh)))
   t
