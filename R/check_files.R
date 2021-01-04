@@ -25,7 +25,13 @@ check_files <- function(folder_name) {
   )
 
   # [gene_name]_variations.rds
-  # ???
+  testthat::expect_silent(
+    ncbiperegrine::read_variations_rds_files(
+      variations_rds_filenames = list.files(
+        folder_name, pattern = "_variations\\.rds$", full.names = TRUE
+      )
+    )
+  )
 
   # [gene_name]_variations.csv
   testthat::expect_silent(

@@ -45,7 +45,7 @@ test_that("continue", {
   expect_true(file.exists(snps_filename))
   expect_true(file.exists(variations_rds_filename))
 
-  n_sps_done <- length(variations_rds_filename(variations_rds_filename))
+  n_sps_done <- length(read_variations_rds_file(variations_rds_filename))
   n_snps <- n_sps_done + 1
   expect_message(
     create_snp_variations_rds_file(
@@ -79,7 +79,7 @@ test_that("done all", {
   expect_true(file.exists(snps_filename))
   expect_true(file.exists(variations_rds_filename))
 
-  n_sps_done <- length(variations_rds_filename(variations_rds_filename))
+  n_sps_done <- length(read_variations_rds_file(variations_rds_filename))
   n_snps <- 1 # All done :-)
   expect_message(
     create_snp_variations_rds_file(
