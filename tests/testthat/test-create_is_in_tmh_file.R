@@ -33,15 +33,29 @@ test_that("use", {
 
 test_that("use", {
   skip("https://github.com/richelbilderbeek/bbbq_article/issues/134")
+  # HIERO
   scripts_path <- "~/GitHubs/ncbi_peregrine/scripts"
-  variations_csv_filename <- tempfile(fileext = "_variations.csv")
+  folder_name <- tempfile()
+  dir.create(folder_name, showWarnings = FALSE, recursive = TRUE)
+  gene_id <- "3269"
+  variations_csv_filename <- file.path(
+    folder_name,
+    paste0(gene_id, "_is_in_tmh.csv")
+  )
+
+  expect_silent(
+    read_variations_csv_file(
+      file.path(scripts_path, basename(variations_csv_filename))
+    )
+  )
+
   file.copy(
-    from = file.path(scripts_path, "10004_variations.csv"),
+    from = file.path(scripts_path, basename(variations_csv_filename)),
     to = variations_csv_filename
   )
-  topo_filename <- tempfile(fileext = ".topo")
+  topo_filename <- file.path(folder_name, paste0(gene_id, ".topo"))
   file.copy(
-    from = file.path(scripts_path, "10004.topo"),
+    from = file.path(scripts_path, basename(topo_filename)),
     to = topo_filename
   )
   expect_true(file.exists(variations_csv_filename))

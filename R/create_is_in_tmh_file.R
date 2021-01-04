@@ -65,8 +65,9 @@ create_is_in_tmh_file <- function(
             t_topo$sequence[variation_index], pos, pos
           )
           # Determine p_in_tmh
-          t_is_in_tmh$p_in_tmh[variation_index] <- stringr::str_count(t_topo$sequence[variation_index], "1") /
-              nchar(t_topo$sequence[variation_index])
+          t_is_in_tmh$p_in_tmh[variation_index] <- stringr::str_count(
+            t_topo$sequence[variation_index], "1"
+          ) / nchar(t_topo$sequence[variation_index])
         }
       }, error = function(e) {
           # Valid reasons to skip

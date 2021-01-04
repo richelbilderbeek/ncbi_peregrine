@@ -29,16 +29,8 @@ create_is_in_tmh_files <- function(
 
   for (i in seq_len(n)) {
     if (verbose) {
-      message(i, "/", n,": ", is_in_tmh_filenames[i])
+      message(i, "/", n, ": ", is_in_tmh_filenames[i])
     }
-    # if (file.exists(is_in_tmh_filenames[i])) {
-    #   if (verbose) {
-    #     message(
-    #       "Skip creating '", is_in_tmh_filenames[i], "': it is already present"
-    #     )
-    #   }
-    #   next
-    # }
     is_in_tmh_filename <- ncbiperegrine::create_is_in_tmh_file(
       variations_csv_filename = variations_csv_filenames[i],
       topo_filename = topo_filenames[i],

@@ -5,11 +5,14 @@
 #' @export
 read_variations_csv_file <- function(variations_csv_filename) {
   testthat::expect_true(file.exists(variations_csv_filename))
-  readr::read_csv(
-    file = variations_csv_filename,
-    col_types = readr::cols(
-      snp_id = readr::col_double(),
-      variation = readr::col_character()
+  testthat::expect_silent({
+    t_variations <- readr::read_csv(
+      file = variations_csv_filename,
+      col_types = readr::cols(
+        snp_id = readr::col_double(),
+        variation = readr::col_character()
+      )
     )
-  )
+  })
+  t_variations
 }
