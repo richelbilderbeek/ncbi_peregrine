@@ -9,7 +9,7 @@ test_that("use", {
   )
   source_variations_csv_filenames <- stringr::str_replace( # nolint indeed a long variable name
     string = source_topo_filenames,
-    pattern = ".topo",
+    pattern = "\\.topo",
     replacement = "_variations.csv"
   )
   topo_filenames <- file.path(folder_name, basename(source_topo_filenames))
@@ -48,12 +48,12 @@ test_that("skip existing is_in_tmh files", {
   )
   source_variations_csv_filenames <- stringr::str_replace( # nolint indeed a long variable name
     string = source_topo_filenames,
-    pattern = ".topo",
+    pattern = "\\.topo",
     replacement = "_variations.csv"
   )
   source_is_in_tmh_filenames <- stringr::str_replace(
     string = source_topo_filenames,
-    pattern = ".topo",
+    pattern = "\\.topo",
     replacement = "_is_in_tmh.csv"
   )[1] # Only copy the first one
   topo_filenames <- file.path(folder_name, basename(source_topo_filenames))
@@ -81,7 +81,7 @@ test_that("skip existing is_in_tmh files", {
   # 2nd is_in_tmh file is not yet created
   expect_equal(
     1,
-    length(list.files(path = folder_name, pattern = "_is_in_tmh.csv"))
+    length(list.files(path = folder_name, pattern = "_is_in_tmh\\.csv$"))
   )
 
   expect_message(
@@ -94,6 +94,6 @@ test_that("skip existing is_in_tmh files", {
   # 2nd is_in_tmh file is now created
   expect_equal(
     2,
-    length(list.files(path = folder_name, pattern = "_is_in_tmh.csv"))
+    length(list.files(path = folder_name, pattern = "_is_in_tmh\\.csv$"))
   )
 })

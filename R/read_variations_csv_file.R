@@ -5,14 +5,22 @@
 #' @export
 read_variations_csv_file <- function(variations_csv_filename) {
   testthat::expect_true(file.exists(variations_csv_filename))
-  testthat::expect_silent({
-    t_variations <- readr::read_csv(
-      file = variations_csv_filename,
-      col_types = readr::cols(
-        snp_id = readr::col_double(),
-        variation = readr::col_character()
+  tryCatch({
+    testthat::expect_silent({
+      t_variations <- readr::read_csv(
+        file = variations_csv_filename,
+        col_types = readr::cols(
+          snp_id = readr::col_double(),
+          variation = readr::col_character()
+        )
       )
+    })
+  }, error = function(e) {
+    stop(
+      "Invalid file [gene_id]_variations.csv file: ",
+      variations_csv_filename
     )
-  })
+  }
+  )
   t_variations
 }

@@ -17,7 +17,11 @@ create_snp_variations_csv_file <- function(
   )
 
   readr::write_csv(
-    x = dplyr::bind_rows(readRDS(variations_rds_filename)),
+    x = dplyr::bind_rows(
+      read_variations_rds_file(
+        variations_rds_filename = variations_rds_filename
+      )
+    ),
     file = variations_csv_filename
   )
   variations_csv_filename

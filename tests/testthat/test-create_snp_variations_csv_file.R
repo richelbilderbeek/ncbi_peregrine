@@ -9,7 +9,9 @@ test_that("use", {
     variations_rds_filename = variations_rds_filename
   )
   expect_true(file.exists(variations_csv_filename))
-  tibbles <- readRDS(variations_rds_filename)
+  tibbles <- read_variations_rds_file(
+    variations_rds_filename = variations_rds_filename
+  )
   t_variations <- readr::read_csv(variations_csv_filename)
 
   # The four variations can be found in both the list

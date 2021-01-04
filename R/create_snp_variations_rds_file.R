@@ -27,7 +27,9 @@ create_snp_variations_rds_file <- function(
   # The variations we're about to obtain
   testthat::expect_true(file.exists(variations_rds_filename))
   # List of tibbles with snp_id and variation
-  tibbles <- readRDS(variations_rds_filename)
+  tibbles <- read_variations_rds_file(
+    variations_rds_filename = variations_rds_filename
+  )
 
   if (length(tibbles) >= n_snps) {
     if (verbose) {

@@ -1,5 +1,5 @@
 ncbiperegrine::create_snp_variations_csv_files(
-  variations_rds_filenames = list.files(pattern = "_variations\\.rds"),
+  variations_rds_filenames = list.files(pattern = "_variations\\.rds$"),
 )
 
 readr::write_lines(

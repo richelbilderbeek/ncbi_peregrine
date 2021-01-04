@@ -19,7 +19,7 @@ test_that("use", {
   )
   expect_true(all(file.exists(filenames)))
   is_in_tmh_filenames <- list.files(
-    path = folder_name, pattern = "_is_in_tmh.csv", full.names = TRUE
+    path = folder_name, pattern = "_is_in_tmh\\.csv$", full.names = TRUE
   )
 
   results_filename <- create_results_file(

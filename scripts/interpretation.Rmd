@@ -26,7 +26,7 @@ n_membrane_proteins <- nrow(ncbiperegrine::read_genes_ids_file("gene_ids.csv"))
 There are `r n_membrane_proteins` membrane proteins in our group of membrane-associated proteins.
 
 ```{r}
-snps_filenames <- list.files(path = ".", pattern = "_snps.csv")
+snps_filenames <- list.files(path = ".", pattern = "_snps\\.csv$")
 n_snps <- nrow(ncbiperegrine::read_snps_files(snps_filenames))
 n_snps_per_gene <- n_snps / length(snps_filenames)
 ```

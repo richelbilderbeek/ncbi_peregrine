@@ -12,7 +12,9 @@ test_that("use", {
     n_snps = n_snps
   )
   expect_true(file.exists(variations_rds_filename))
-  tibbles <- readRDS(variations_rds_filename)
+  tibbles <- read_variations_rds_file(
+    variations_rds_filename = variations_rds_filename
+  )
 
   expect_equal(length(tibbles), n_snps)
   expect_equal(1, nrow(tibbles[[7]]))
@@ -43,7 +45,7 @@ test_that("continue", {
   expect_true(file.exists(snps_filename))
   expect_true(file.exists(variations_rds_filename))
 
-  n_sps_done <- length(readRDS(variations_rds_filename))
+  n_sps_done <- length(variations_rds_filename(variations_rds_filename))
   n_snps <- n_sps_done + 1
   expect_message(
     create_snp_variations_rds_file(
@@ -54,7 +56,7 @@ test_that("continue", {
     "SNP 30/31: already done"
   )
   expect_true(file.exists(variations_rds_filename))
-  expect_equal(n_snps, length(readRDS(variations_rds_filename)))
+  expect_equal(n_snps, length(read_variations_rds_file(variations_rds_filename)))
 })
 
 test_that("done all", {
@@ -77,7 +79,7 @@ test_that("done all", {
   expect_true(file.exists(snps_filename))
   expect_true(file.exists(variations_rds_filename))
 
-  n_sps_done <- length(readRDS(variations_rds_filename))
+  n_sps_done <- length(variations_rds_filename(variations_rds_filename))
   n_snps <- 1 # All done :-)
   expect_message(
     create_snp_variations_rds_file(
@@ -88,5 +90,9 @@ test_that("done all", {
     "Already processed 30 out of 1 SNPs"
   )
   expect_true(file.exists(variations_rds_filename))
-  expect_true(length(readRDS(variations_rds_filename)) > n_snps)
+  expect_true(
+    length(
+      read_variations_rds_file(variations_rds_filename = variations_rds_filename)
+    ) > n_snps
+  )
 })

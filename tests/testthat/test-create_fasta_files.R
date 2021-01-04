@@ -71,7 +71,7 @@ test_that("skip existing FASTA files", {
   # 2nd FASTA file is not yet created
   expect_equal(
     1,
-    length(list.files(path = folder, pattern = ".fasta"))
+    length(list.files(path = folder, pattern = "\\.fasta$"))
   )
 
   expect_message(
@@ -85,7 +85,7 @@ test_that("skip existing FASTA files", {
   # 2nd FASTA file is created
   expect_equal(
     2,
-    length(list.files(path = folder, pattern = ".fasta"))
+    length(list.files(path = folder, pattern = "\\.fasta$"))
   )
 })
 

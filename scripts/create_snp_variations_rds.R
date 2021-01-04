@@ -6,7 +6,7 @@ message("n_snps: ", n_snps)
 message("verbose: ", verbose)
 
 ncbiperegrine::create_snp_variations_rds_files(
-  snps_filenames = list.files(pattern = "_snps\\.csv"),
+  snps_filenames = list.files(pattern = "_snps\\.csv$"),
   n_snps = n_snps,
   verbose = verbose
 )

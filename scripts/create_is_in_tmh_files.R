@@ -1,5 +1,5 @@
 ncbiperegrine::create_is_in_tmh_files(
-  topo_filenames = list.files(pattern = "\\.topo"),
+  topo_filenames = list.files(pattern = "\\.topo$"),
   verbose = TRUE
 )
 
