@@ -1,4 +1,5 @@
 #' Check all the files in a folder
+#' @inheritParams default_params_doc
 #' @return names of files that are invalid
 #' @export
 check_files <- function(folder_name) {
@@ -43,6 +44,47 @@ check_files <- function(folder_name) {
   )
 
   # [gene_name].fasta
+  fasta_filenames <- list.files(
+    folder_name, pattern = "\\.fasta$", full.names = TRUE
+  )
+  for (fasta_filename in fasta_filenames) {
+    testthat::expect_silent(
+      pureseqtmr::load_fasta_file_as_tibble(fasta_filename)
+    )
+  }
+
   # [gene_name].topo
+  topo_filenames <- list.files(
+    folder_name, pattern = "\\.topo$", full.names = TRUE
+  )
+  for (topo_filename in topo_filenames) {
+    testthat::expect_silent(
+      pureseqtmr::load_fasta_file_as_tibble(topo_filename)
+    )
+  }
+
   # [gene_name]_is_in_tmh.csv
+  is_in_tmh_filenames = list.files(
+    folder_name, pattern = "_is_in_tmh\\.csv$", full.names = TRUE
+  )
+  for (is_in_tmh_filename in is_in_tmh_filenames) {
+    tryCatch({
+    testthat::expect_silent(
+      ncbiperegrine::read_is_in_tmh_file(
+        is_in_tmh_filename
+      )
+    )
+    }, error = function(e) {
+      stop("File ", is_in_tmh_filename, " is invalid")
+    }
+    )
+  }
+
+  # results.csv
+  testthat::expect_silent(
+    ncbiperegrine::read_results_file(
+      results_filename = file.path(folder_name, "results.csv")
+    )
+  )
+
 }

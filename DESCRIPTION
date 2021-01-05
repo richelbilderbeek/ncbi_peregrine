@@ -19,6 +19,7 @@ Imports:
     dplyr,
     ncbi,
     pureseqtmr,
+    purrr,
     readr,
     sprentrez,
     stringr,

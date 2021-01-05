@@ -58,8 +58,20 @@ create_is_in_tmh_file <- function(
         this_variation <- ncbi::parse_hgvs(
           t_variations$variation[variation_index]
         )
-        if (this_variation$from != this_variation$to) {
+        # For example, NP_001258521.1:p.Ter69Glu is a valid variation
+        # that should not be taken into account
+        if (this_variation$from != this_variation$to &&
+            this_variation$from != "Ter"
+        ) {
           pos <- this_variation$pos
+          # The position must exist
+          # if (verbose) {
+          #   message("Variation: ", t_variations$variation[variation_index])
+          #   message("Position this variant works on: ", pos)
+          #   message("Topology: '", t_topo$sequence[variation_index], "'")
+          #   message("Length of protein: ", nchar(t_topo$sequence[variation_index]))
+          # }
+          testthat::expect_true(pos <= nchar(t_topo$sequence[variation_index]))
           # Is a 1 or 0 at that spot?
           t_is_in_tmh$is_in_tmh[variation_index] <- "1" == stringr::str_sub(
             t_topo$sequence[variation_index], pos, pos
@@ -79,6 +91,14 @@ create_is_in_tmh_file <- function(
       )
     }
   }
+  # Not all variants are used, e.g. frame shifts.
+  # For those, 'is_in_tmh' and 'p_in_tmh' are both NA
+  # Else, both are values; a boolean and a floating point
+  testthat::expect_equal(
+    0,
+    sum(!is.na(t_is_in_tmh$is_in_tmh) & is.na(t_is_in_tmh$p_in_tmh))
+  )
+
   # Save
   readr::write_csv(
     x = t_is_in_tmh,
