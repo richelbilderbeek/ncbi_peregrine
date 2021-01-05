@@ -22,4 +22,3 @@ test_that("cannot read invalid file", {
     read_is_in_tmh_file(is_in_tmh_filename = is_in_tmh_filename)
   )
 })
-

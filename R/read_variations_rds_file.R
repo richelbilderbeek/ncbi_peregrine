@@ -6,7 +6,7 @@ read_variations_rds_file <- function(variations_rds_filename) {
   tibbles <- readRDS(variations_rds_filename)
   testthat::expect_true(is.list(tibbles))
   testthat::expect_true(
-    all(purrr:::map_lgl(tibbles, tibble::is_tibble))
+    all(purrr::map_lgl(tibbles, tibble::is_tibble))
   )
   tibbles
 }

@@ -52,7 +52,9 @@ test_that("skip substitutions at terminal", {
   gene_id <- "100129361"
 
   # Delete the file to re-create
-  is_in_tmh_filename <- file.path(folder_name, paste0(gene_id, "_is_in_tmh.csv"))
+  is_in_tmh_filename <- file.path(
+    folder_name, paste0(gene_id, "_is_in_tmh.csv")
+  )
   expect_true(file.exists(is_in_tmh_filename))
   file.remove(is_in_tmh_filename)
   expect_false(file.exists(is_in_tmh_filename))

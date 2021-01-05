@@ -60,7 +60,7 @@ check_files <- function(folder_name) {
   ncbiperegrine::check_topo_files(topo_filenames)
 
   # [gene_name]_is_in_tmh.csv
-  is_in_tmh_filenames = list.files(
+  is_in_tmh_filenames <- list.files(
     folder_name, pattern = "_is_in_tmh\\.csv$", full.names = TRUE
   )
   for (is_in_tmh_filename in is_in_tmh_filenames) {

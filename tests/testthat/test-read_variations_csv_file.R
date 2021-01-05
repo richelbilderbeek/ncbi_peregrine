@@ -14,7 +14,7 @@ test_that("use", {
 
 test_that("use", {
   skip("https://github.com/richelbilderbeek/bbbq_article/issues/134")
-  variations_csv_filename <- "~/GitHubs/ncbi_peregrine/scripts/100129361_variations.csv"
+  variations_csv_filename <- "~/GitHubs/ncbi_peregrine/scripts/100129361_variations.csv" # nolint indeed long line
   file.exists(variations_csv_filename)
   t_variations <- read_variations_csv_file(
     variations_csv_filename = variations_csv_filename

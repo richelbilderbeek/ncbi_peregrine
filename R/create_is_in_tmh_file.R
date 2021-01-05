@@ -65,11 +65,13 @@ create_is_in_tmh_file <- function(
         ) {
           pos <- this_variation$pos
           # The position must exist
-          if (verbose) {
+          if (verbose && 1 == 2) {
             message("Variation: ", t_variations$variation[variation_index])
             message("Position this variant works on: ", pos)
             message("Topology: '", t_topo$sequence[variation_index], "'")
-            message("Length of protein: ", nchar(t_topo$sequence[variation_index]))
+            message(
+              "Length of protein: ", nchar(t_topo$sequence[variation_index])
+            )
           }
           testthat::expect_true(pos <= nchar(t_topo$sequence[variation_index]))
           # Is a 1 or 0 at that spot?

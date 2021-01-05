@@ -13,32 +13,25 @@ create_topo_file <- function(
     replacement = ".topo"
   )
 
-  t_sequences <- pureseqtmr::load_fasta_file_as_tibble(fasta_filename)
-
   # Start clean
   if (!file.exists(topo_filename)) {
-    if (verbose) {
-      message(
-        "Creating ", topo_filename, " from ", nrow(t_sequences), " sequences"
+    return(
+      ncbiperegrine::create_topo_file_from_scratch(
+        fasta_filename = fasta_filename,
+        verbose = verbose
       )
-    }
-    # Predict the topology
-    t_topology <- pureseqtmr::predict_topology(fasta_filename = fasta_filename)
-
-    # Convert to (pseudo-FASTA) topology file
-    pureseqtmr::save_tibble_as_fasta_file(
-      t = t_topology,
-      fasta_filename = topo_filename
     )
-    return(topo_filename)
   }
+  t_sequences <- pureseqtmr::load_fasta_file_as_tibble(fasta_filename)
 
   # Do nothing if all has been done already
   testthat::expect_true(file.exists(topo_filename))
   t_topology <- pureseqtmr::load_fasta_file_as_tibble(topo_filename)
   if (nrow(t_sequences) == nrow(t_topology)
-    && nchar(t_sequences$sequence) == nchar(t_topology$sequence)
-    && all(nchar(t_topology$sequence) > 0)
+    || (nrow(t_sequences) > 0
+      && nchar(t_sequences$sequence) == nchar(t_topology$sequence)
+      && all(nchar(t_topology$sequence) > 0)
+    )
   ) {
     if (verbose) {
       message("Already processed all ", nrow(t_topology), " topologies")
