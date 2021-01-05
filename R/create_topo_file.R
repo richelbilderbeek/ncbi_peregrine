@@ -36,7 +36,10 @@ create_topo_file <- function(
   # Do nothing if all has been done already
   testthat::expect_true(file.exists(topo_filename))
   t_topology <- pureseqtmr::load_fasta_file_as_tibble(topo_filename)
-  if (nrow(t_sequences) == nrow(t_topology)) {
+  if (nrow(t_sequences) == nrow(t_topology)
+    && nchar(t_sequences$sequence) == nchar(t_topology$sequence)
+    && all(nchar(t_topology$sequence) > 0)
+  ) {
     if (verbose) {
       message("Already processed all ", nrow(t_topology), " topologies")
     }

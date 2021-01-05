@@ -57,24 +57,7 @@ check_files <- function(folder_name) {
   topo_filenames <- list.files(
     folder_name, pattern = "\\.topo$", full.names = TRUE
   )
-  if (1 == 2) {
-    # For https://github.com/richelbilderbeek/bbbq_article/issues/139
-    topo_filenames <- list.files(
-      folder_name, pattern = "^115.topo$", full.names = TRUE
-    )
-  }
-  for (topo_filename in topo_filenames) {
-    tryCatch({
-      t_topo <- NA
-      testthat::expect_silent({
-        t_topo <- pureseqtmr::load_fasta_file_as_tibble(topo_filename)
-      })
-      testthat::expect_true(all(nchar(t_topo$sequence) > 0))
-    }, error = function(e) {
-      stop("File ", topo_filename, " is invalid")
-    }
-    )
-  }
+  ncbiperegrine::check_topo_files(topo_filenames)
 
   # [gene_name]_is_in_tmh.csv
   is_in_tmh_filenames = list.files(
