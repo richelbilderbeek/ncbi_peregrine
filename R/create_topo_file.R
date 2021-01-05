@@ -22,15 +22,15 @@ create_topo_file <- function(
       )
     )
   }
-  t_sequences <- pureseqtmr::load_fasta_file_as_tibble(fasta_filename)
 
   # Do nothing if all has been done already
+  t_sequences <- pureseqtmr::load_fasta_file_as_tibble(fasta_filename)
   testthat::expect_true(file.exists(topo_filename))
   t_topology <- pureseqtmr::load_fasta_file_as_tibble(topo_filename)
-  if (nrow(t_sequences) == nrow(t_topology)
-    || (nrow(t_sequences) > 0
-      && nchar(t_sequences$sequence) == nchar(t_topology$sequence)
-      && all(nchar(t_topology$sequence) > 0)
+  if ((nrow(t_sequences) == 0 && nrow(t_topology) == 0)
+    || (length(t_topology$sequence) > 0
+      && length(t_sequences$sequence) == length(t_topology$sequence)
+      && all(nchar(t_sequences$sequence) == nchar(t_topology$sequence))
     )
   ) {
     if (verbose) {
