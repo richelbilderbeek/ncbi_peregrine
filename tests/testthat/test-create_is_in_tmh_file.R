@@ -35,9 +35,9 @@ test_that("skip substitutions at terminal", {
 
   # Recreate a valid is_in_tmh.csv file
 
+  # Copy all needed files
   folder_name <- tempfile()
   dir.create(folder_name, showWarnings = FALSE, recursive = TRUE)
-
   file.copy(
     from = list.files(
       path = system.file(
@@ -50,17 +50,22 @@ test_that("skip substitutions at terminal", {
     to = folder_name
   )
   gene_id <- "100129361"
+
+  # Delete the file to re-create
   is_in_tmh_filename <- file.path(folder_name, paste0(gene_id, "_is_in_tmh.csv"))
   expect_true(file.exists(is_in_tmh_filename))
   file.remove(is_in_tmh_filename)
   expect_false(file.exists(is_in_tmh_filename))
 
-  # Re-create
+  # Re-create the file
   variations_csv_filename <- file.path(
     folder_name,
     paste0(gene_id, "_variations.csv")
   )
-  topo_filename <- file.path(folder_name, paste0(gene_id, ".topo"))
+  topo_filename <- file.path(
+    folder_name,
+    paste0(gene_id, ".topo")
+  )
   expect_true(file.exists(variations_csv_filename))
   expect_true(file.exists(topo_filename))
 
@@ -69,10 +74,18 @@ test_that("skip substitutions at terminal", {
     topo_filename = topo_filename
   )
   expect_true(file.exists(in_tmh_filename))
+
+  # Check
   t_in_tmh <- read_is_in_tmh_file(in_tmh_filename)
-  # Must have NP_001258521.1:p.Ter69Glu,NA,NA
+  # Must have:
+  #   NP_001258521.1:p.Ter69Glu,NA,NA
+  # or
+  #  NP_001258521.1:p.Ter69Glu,NA,0.1
   row_index <- which(t_in_tmh$variation == "NP_001258521.1:p.Ter69Glu")
   expect_true(is.na(t_in_tmh$is_in_tmh[row_index]))
+
+  # This test is debatable: it is possible to determine the chance
+  # this variation occurs in the TMH
   expect_true(is.na(t_in_tmh$p_in_tmh[row_index]))
 })
 

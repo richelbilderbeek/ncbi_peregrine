@@ -8,6 +8,7 @@ documentation.}
 default_params_doc(
   fasta_filename,
   fasta_filenames,
+  folder_name,
   gene_ids_filename,
   gene_names_filename,
   is_in_tmh_filename,
@@ -33,6 +34,8 @@ default_params_doc(
 
 \item{fasta_filenames}{name of one or more FASTA files
 with protein sequences}
+
+\item{folder_name}{name of the folder}
 
 \item{gene_ids_filename}{the filename to save
 the gene IDs to.

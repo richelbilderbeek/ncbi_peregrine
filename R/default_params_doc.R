@@ -3,6 +3,7 @@
 #' @param fasta_filename name of a FASTA file with a protein sequence
 #' @param fasta_filenames name of one or more FASTA files
 #'   with protein sequences
+#' @param folder_name name of the folder
 #' @param gene_ids_filename the filename to save
 #'   the gene IDs to.
 #'   For the experiment, use \code{gene_ids.csv}
@@ -61,6 +62,7 @@
 default_params_doc <- function(
   fasta_filename,
   fasta_filenames,
+  folder_name,
   gene_ids_filename,
   gene_names_filename,
   is_in_tmh_filename,

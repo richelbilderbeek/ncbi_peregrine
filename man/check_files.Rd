@@ -6,6 +6,9 @@
 \usage{
 check_files(folder_name)
 }
+\arguments{
+\item{folder_name}{name of the folder}
+}
 \value{
 names of files that are invalid
 }
