@@ -35,7 +35,6 @@ test_that("use", {
 })
 
 test_that("skip existing is_in_tmh files", {
-  skip("Not now")
   # 2 topo and 2 variations files should result in 2 is_in_tmh files
   # if 1 is_in_tmh file is present, it should be skipped
   # Copy all input files needed to a temp folder

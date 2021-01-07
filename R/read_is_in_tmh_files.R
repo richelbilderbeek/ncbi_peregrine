@@ -6,8 +6,8 @@ read_is_in_tmh_files <- function(is_in_tmh_filenames) {
   t_is_in_tmh <- list()
   n <- length(is_in_tmh_filenames)
   for (i in seq_len(n)) {
-    t <- ncbiperegrine::read_is_in_tmh_file(is_in_tmh_filenames[i])
-    t_is_in_tmh[[i]] <- t
+    t_is_in_tmh[[i]] <-
+      ncbiperegrine::read_is_in_tmh_file(is_in_tmh_filenames[i])
   }
   t_is_in_tmh <- dplyr::bind_rows(t_is_in_tmh)
   # If is_in_tmh is TRUE or FALSE,

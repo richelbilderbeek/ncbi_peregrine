@@ -1,4 +1,4 @@
-test_that("use", {
+test_that("use, no mock", {
   if (!pureseqtmr::is_pureseqtm_installed()) return()
   fasta_filename <- tempfile(fileext = ".fasta")
   file.copy(
