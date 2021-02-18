@@ -237,10 +237,12 @@ user	45m41.377s
 sys	0m29.540s
 ```
 
+## How are the figures created?
+
+By running the tests of `ncbi_results` locally.
+
 ## Downloads
 
  * 30 SNPs per gene ID: [ncbi_peregrine_data_20201214.zip](http://richelbilderbeek.nl/ncbi_peregrine_data_20201214.zip)
  * 60 SNPs per gene ID: [ncbi_peregrine_data_20201219.zip](http://richelbilderbeek.nl/ncbi_peregrine_data_20201219.zip)
-
-
 
