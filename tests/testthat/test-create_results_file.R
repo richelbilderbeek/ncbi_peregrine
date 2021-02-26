@@ -34,17 +34,23 @@ test_that("use", {
 })
 
 test_that("use", {
-  skip("https://github.com/richelbilderbeek/bbbq_article/issues/134")
-  results_filename <- ncbiperegrine::create_results_file(
-    is_in_tmh_filenames = list.files(
-      path = "~/GitHubs/ncbi_peregrine/scripts",
-      pattern = "_is_in_tmh\\.csv",
-      full.names = TRUE
-    )[444]
+  skip("local only")
+  is_in_tmh_filenames <- list.files(
+    path = "~/GitHubs/ncbi_peregrine/scripts",
+    pattern = "_is_in_tmh\\.csv",
+    full.names = TRUE
   )
-  t_is_in_tmh <- read_is_in_tmh_file(is_in_tmh_filenames[1])
-  read_is_in_tmh_files(is_in_tmh_filenames)
-  t <- readr::read_csv(results_filename)
-  testthat::expect_equal(0, sum(!is.na(t$is_in_tmh) & is.na(t$p_in_tmh)))
-  t
+  results_filename <- ncbiperegrine::create_results_file(
+    is_in_tmh_filenames = is_in_tmh_filenames
+  )
+  t_results <- read_results_file(results_filename)
+  n_variations <- nrow(t_results)
+  t_snps <- dplyr::filter(t_results, !is.na(p_in_tmh))
+  n_snps <- nrow(t_snps)
+  expect_equal(n_snps, 38883)
+  n_snps_map <- nrow(t_snps %>% dplyr::filter(p_in_tmh == 0.0))
+  expect_equal(n_snps_map, 17144)
+  n_snps_tmp <- nrow(t_snps %>% dplyr::filter(p_in_tmh > 0.0))
+  expect_equal(n_snps_tmp, 8369 + 13369)
+
 })
