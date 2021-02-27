@@ -14,7 +14,7 @@ Depends:
 Imports:
     dplyr,
     ncbi,
-    pureseqtmr,
+    pureseqtmr (>= 1.3),
     purrr,
     readr,
     sprentrez,
