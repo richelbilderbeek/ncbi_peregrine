@@ -13,7 +13,7 @@ Depends:
     R (>= 3.5)
 Imports:
     dplyr,
-    ncbi,
+    ncbi (>= 1.2.1),
     pureseqtmr (>= 1.3),
     purrr,
     readr,
