@@ -1,7 +1,7 @@
 #' Create the topology files from the FASTA files
 #' @inheritParams default_params_doc
 #' @export
-create_topo_file <- function(
+create_topo_file <- function( # nolint indeed a too complex function
   fasta_filename,
   verbose = FALSE
 ) {

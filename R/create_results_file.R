@@ -70,13 +70,33 @@ create_results_file <- function(
     ]
   }
 
+  # These are all genes that matched 'membrane protein', at 2021-03-01
+  testthat::expect_equal(1130, length(unique(t_gene_names$gene_id)))
+  # These are all genes that matched 'membrane protein', at 2020-12-20
+  testthat::expect_equal(1077, length(unique(t_snp_ids$gene_id)))
+
+  # These are the gene IDs that were valid in 2020, and invalid in 2021
+  removed_gene_ids <- unique(
+    t_snp_ids$gene_id[
+      which(!t_snp_ids$gene_id %in% t_gene_names$gene_id)
+    ]
+  )
+  testthat::expect_equal(removed_gene_ids, 112267964)
+  n_removed_gene_ids <- length(removed_gene_ids)
+  testthat::expect_equal(1, n_removed_gene_ids)
+
+
+  # Inner join: keep the gene IDs that are in both tables
   t_results_1 <- dplyr::inner_join(
     t_gene_names,
     t_snp_ids,
     by = "gene_id"
   )
+  testthat::expect_equal(
+    1077 - n_removed_gene_ids,
+    length(unique(t_results_1$gene_id))
+  )
 
-  testthat::expect_equal(nrow(t_results_1), nrow(t_snp_ids))
   t_results_1
   #
   # Create t_results for the first four columns
@@ -103,9 +123,35 @@ create_results_file <- function(
   #
   t_results_1
 
-  t_variations <- ncbiperegrine::read_variations_csv_files(
+  t_variations_all <- ncbiperegrine::read_variations_csv_files(
     variations_csv_filenames = variations_csv_filenames
   )
+
+  # There is still the obsoleted gene ID in t_variations
+  # These are the obsoleted SNPs
+  obsolete_snp_ids <- unique(
+    t_variations_all$snp_id[
+      which(!t_variations_all$snp_id %in% t_results_1$snp_id)
+    ]
+  )
+  testthat::expect_true(
+    all(
+      t_variations_all[
+        t_variations_all$snp_id %in% obsolete_snp_ids,
+      ]$gene_id == removed_gene_ids # Prove the link
+    )
+  )
+  n_obsolete_snp_ids <- length(obsolete_snp_ids)
+  testthat::expect_equal(5, n_obsolete_snp_ids)
+
+
+  snp_id <- NULL; rm(snp_id) # nolint, fixes warning: no visible binding for global variable
+  # There is still the obsoleted gene ID in t_variations
+  t_variations <- dplyr::filter(
+    t_variations_all,
+    snp_id %in% t_results_1$snp_id
+  )
+
   testthat::expect_true(all(t_variations$snp_id %in% t_results_1$snp_id))
   # A SNP IDs can have multiple variations ...
   # ... but also not all variations are unique
@@ -173,7 +219,10 @@ create_results_file <- function(
     y = t_is_in_tmh,
     by = "variation"
   )
-  testthat::expect_equal(nrow(t_results_2), nrow(t_is_in_tmh))
+  testthat::expect_equal(
+    nrow(t_results_2),
+    nrow(t_is_in_tmh) - n_obsolete_snp_ids
+  )
 
   # If is_in_tmh is TRUE or FALSE,
   # then the p_in_tmh must be in range [0,1]
