@@ -35,22 +35,35 @@ test_that("use", {
 
 test_that("use", {
   skip("local only")
-  is_in_tmh_filenames <- list.files(
-    path = "~/GitHubs/ncbi_peregrine/scripts",
-    pattern = "_is_in_tmh\\.csv",
-    full.names = TRUE
-  )
-  results_filename <- ncbiperegrine::create_results_file(
-    is_in_tmh_filenames = is_in_tmh_filenames
-  )
+  results_filename <- "~/GitHubs/ncbi_peregrine/scripts/results.csv"
   t_results <- read_results_file(results_filename)
-  n_variations <- nrow(t_results)
-  t_snps <- dplyr::filter(t_results, !is.na(p_in_tmh))
-  n_snps <- nrow(t_snps)
-  expect_equal(n_snps, 38883)
-  n_snps_map <- nrow(t_snps %>% dplyr::filter(p_in_tmh == 0.0))
-  expect_equal(n_snps_map, 17144)
-  n_snps_tmp <- nrow(t_snps %>% dplyr::filter(p_in_tmh > 0.0))
-  expect_equal(n_snps_tmp, 8369 + 13369)
+  expect_equal(nrow(t_results), nrow(dplyr::distinct(t_results)))
+  n_variations <- length(t_results$variation)
+  expect_equal(n_variations, 60931)
+  n_unique_variations <- length(unique(t_results$variation))
+  expect_equal(n_unique_variations, 60544)
+  n_gene_ids <- length(unique(t_results$gene_id))
+  expect_equal(n_gene_ids, 953)
+  n_gene_names <- length(unique(t_results$gene_name))
+  expect_equal(n_gene_names, 953)
+
+  t_snps <- dplyr::filter(t_results, ncbi::are_snps(variation))
+  expect_equal(nrow(t_snps), nrow(dplyr::distinct(t_snps)))
+
+  n_unique_variations <- length(unique(t_snps$variation))
+  expect_equal(37630, n_unique_variations)
+  n_unique_snp_ids <- length(unique(t_snps$snp_id))
+  expect_equal(9621, n_unique_snp_ids)
+
+  t_snps_map <- dplyr::filter(t_snps, p_in_tmh == 0.0)
+  expect_equal(nrow(t_snps_map), nrow(dplyr::distinct(t_snps_map)))
+  n_snps_map <- nrow(t_snps_map)
+  expect_equal(16623, n_snps_map)
+  n_unique_snp_ids_map <- length(unique(t_snps_map$snp_id))
+  expect_equal(9621, n_unique_snp_ids_map)
+
+  t_snps_tmp <- dplyr::filter(t_snps, p_in_tmh > 0.0)
+  n_snps_tmp <- nrow(t_snps_tmp)
+  expect_equal(n_snps_tmp, 21208)
 
 })

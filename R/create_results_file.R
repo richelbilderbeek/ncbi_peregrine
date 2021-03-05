@@ -52,11 +52,20 @@ create_results_file <- function(
 
   # Gene name to gene ID LUT
   t_gene_names <- ncbiperegrine::read_gene_names_file(gene_names_filename)
+  testthat::expect_equal(
+    nrow(t_gene_names),
+    nrow(dplyr::distinct(t_gene_names))
+  )
 
   # Get all SNP IDs per gene name
   t_snp_ids <- ncbiperegrine::read_snps_files(
     snps_filenames = snp_ids_filenames
   )
+  testthat::expect_equal(
+    nrow(t_snp_ids),
+    nrow(dplyr::distinct(t_snp_ids))
+  )
+
   # Not all SNP IDs are unique, for example
   # Gene ID | Gene name | SNP ID
   # --------|-----------|------------|--------------------
@@ -70,20 +79,14 @@ create_results_file <- function(
     ]
   }
 
-  # These are all genes that matched 'membrane protein', at 2021-03-01
-  # testthat::expect_equal(1130, length(unique(t_gene_names$gene_id)))
-  # These are all genes that matched 'membrane protein', at 2020-12-20
-  # testthat::expect_equal(1077, length(unique(t_snp_ids$gene_id)))
-
   # These are the gene IDs that were valid in 2020, and invalid in 2021
   removed_gene_ids <- unique(
     t_snp_ids$gene_id[
       which(!t_snp_ids$gene_id %in% t_gene_names$gene_id)
     ]
   )
-  # testthat::expect_equal(removed_gene_ids, 112267964)
   n_removed_gene_ids <- length(removed_gene_ids)
-  # testthat::expect_equal(1, n_removed_gene_ids)
+  testthat::expect_true(n_removed_gene_ids >= 0)
 
 
   # Inner join: keep the gene IDs that are in both tables
@@ -92,10 +95,10 @@ create_results_file <- function(
     t_snp_ids,
     by = "gene_id"
   )
-  # testthat::expect_equal(
-  #   1077 - n_removed_gene_ids,
-  #   length(unique(t_results_1$gene_id))
-  # )
+  testthat::expect_equal(
+    nrow(t_results_1),
+    nrow(dplyr::distinct(t_results_1))
+  )
 
   t_results_1
   #
@@ -126,6 +129,10 @@ create_results_file <- function(
   t_variations_all <- ncbiperegrine::read_variations_csv_files(
     variations_csv_filenames = variations_csv_filenames
   )
+  testthat::expect_equal(
+    nrow(t_variations_all),
+    nrow(dplyr::distinct(t_variations_all))
+  )
 
   # There is still the obsoleted gene ID in t_variations
   # These are the obsoleted SNPs
@@ -142,7 +149,7 @@ create_results_file <- function(
     )
   )
   n_obsolete_snp_ids <- length(obsolete_snp_ids)
-  # testthat::expect_equal(5, n_obsolete_snp_ids)
+  testthat::expect_true(n_obsolete_snp_ids >= 0)
 
 
   snp_id <- NULL; rm(snp_id) # nolint, fixes warning: no visible binding for global variable
@@ -150,6 +157,10 @@ create_results_file <- function(
   t_variations <- dplyr::filter(
     t_variations_all,
     snp_id %in% t_results_1$snp_id
+  )
+  testthat::expect_equal(
+    nrow(t_variations),
+    nrow(dplyr::distinct(t_variations))
   )
 
   testthat::expect_true(all(t_variations$snp_id %in% t_results_1$snp_id))
@@ -176,6 +187,10 @@ create_results_file <- function(
     by = c("gene_id", "snp_id")
   )
   testthat::expect_equal(nrow(t_results_2), nrow(t_variations))
+  testthat::expect_equal(
+    nrow(t_results_2),
+    nrow(dplyr::distinct(t_results_2))
+  )
   t_results_2
 
   # Create t_results for all columns
@@ -203,7 +218,12 @@ create_results_file <- function(
   #                             |------------------------------------------|
   #                                      [gene_name]_is_in_tmh.csv
 
-  t_is_in_tmh <- read_is_in_tmh_files(is_in_tmh_filenames)
+  t_is_in_tmh_with_duplicates <- read_is_in_tmh_files(is_in_tmh_filenames)
+  t_is_in_tmh <- dplyr::distinct(t_is_in_tmh_with_duplicates)
+  testthat::expect_equal(
+    nrow(t_is_in_tmh),
+    nrow(dplyr::distinct(t_is_in_tmh))
+  )
 
   # If is_in_tmh is TRUE or FALSE,
   # then the p_in_tmh must be in range [0,1]
@@ -221,7 +241,7 @@ create_results_file <- function(
   )
   testthat::expect_equal(
     nrow(t_results_2),
-    nrow(t_is_in_tmh) - n_obsolete_snp_ids
+    nrow(dplyr::distinct(t_results_2))
   )
 
   # If is_in_tmh is TRUE or FALSE,
@@ -235,4 +255,3 @@ create_results_file <- function(
   readr::write_csv(x = t_results, file = results_filename)
   results_filename
 }
-
