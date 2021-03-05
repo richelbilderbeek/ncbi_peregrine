@@ -17,7 +17,6 @@ test_that("use", {
 })
 
 test_that("remove duplicates", {
-  skip("For now")
   results_filename <- system.file(
     "extdata",
     "results_with_duplicates.csv",
