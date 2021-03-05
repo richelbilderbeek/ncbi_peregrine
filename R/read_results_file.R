@@ -1,4 +1,4 @@
-#' Read the results file
+#' Read the results file and removes duplicates
 #' @inheritParams default_params_doc
 #' @export
 read_results_file <- function(results_filename) {

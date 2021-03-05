@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_results_file.R
 \name{read_results_file}
 \alias{read_results_file}
-\title{Read the results file}
+\title{Read the results file and removes duplicates}
 \usage{
 read_results_file(results_filename)
 }
@@ -11,5 +11,5 @@ read_results_file(results_filename)
 For the experiment, use \code{results.csv}}
 }
 \description{
-Read the results file
+Read the results file and removes duplicates
 }
