@@ -234,14 +234,14 @@ create_results_file <- function(
 
   t_results_2$variation[!(t_results_2$variation %in% t_is_in_tmh$variation)]
 
-  t_results <- dplyr::full_join(
+  t_results_3 <- dplyr::full_join(
     x = t_results_2,
     y = t_is_in_tmh,
     by = "variation"
   )
   testthat::expect_equal(
-    nrow(t_results_2),
-    nrow(dplyr::distinct(t_results_2))
+    nrow(t_results_3),
+    nrow(dplyr::distinct(t_results_3))
   )
 
   # If is_in_tmh is TRUE or FALSE,
@@ -249,11 +249,8 @@ create_results_file <- function(
   # There is an error for e.g. variation NP_001170990.1:p.Gly254Arg
   testthat::expect_equal(
     0,
-    sum(!is.na(t_results$is_in_tmh) & is.na(t_results$p_in_tmh))
+    sum(!is.na(t_results_3$is_in_tmh) & is.na(t_results_3$p_in_tmh))
   )
-
-  # NEW
-  nrow_before <- nrow(t_results)
 
   # Read the topology for the number of TMHs
   topo_filenames <- stringr::str_replace(
@@ -271,18 +268,16 @@ create_results_file <- function(
   }
   t_topo <- dplyr::bind_rows(tibbles)
 
-  t_results$name <- stringr::str_match(
+  t_results_3$name <- stringr::str_match(
     string = t_results$variation,
     pattern = "^(.*):p\\..*$"
   )[, 2]
-  testthat::expect_equal(nrow_before, nrow(t_results))
 
   t_results_4 <- dplyr::left_join(
-    t_results,
+    t_results_3,
     dplyr::distinct(t_topo),
     by = "name"
   )
-  testthat::expect_equal(nrow_before, nrow(t_results_4))
   testthat::expect_equal(
     0,
     nrow(
@@ -292,12 +287,8 @@ create_results_file <- function(
       )
     )
   )
-  t_results <- t_results_4
-  testthat::expect_equal(nrow_before, nrow(t_results_4))
-  testthat::expect_equal(nrow_before, nrow(t_results))
-  # NEW END
 
-  readr::write_csv(x = t_results, file = results_filename)
+  readr::write_csv(x = t_results_4, file = results_filename)
   results_filename
 }
 

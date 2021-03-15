@@ -208,6 +208,7 @@ gene_id|gene_name|snp_id    |variation              |is_in_tmh|p_in_tmh|n_tmh
                             |-----------------------|                  |-----|
                                                       [gene_name].topo
 ```
+
 ## Estimated time
 
  * 8 seconds per gene ID, 
