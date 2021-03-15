@@ -186,10 +186,10 @@ NP_000585.2:p.Gly144Asp|FALSE    |0.123
  * All raw output files in one table, `results.csv`,
    created by `create_results.sh`
 
-gene_id|gene_name|snp_id    |variation              |is_in_tmh|p_in_tmh
--------|---------|----------|-----------------------|---------|--------
-7124   |TNF      |1583049783|NP_000585.2:p.Gly144Asp|FALSE    |0.123
-...    |...      |...       |...                    |...      |...
+gene_id|gene_name|snp_id    |variation              |is_in_tmh|p_in_tmh|n_tmh
+-------|---------|----------|-----------------------|---------|--------|-----
+7124   |TNF      |1583049783|NP_000585.2:p.Gly144Asp|FALSE    |0.123   |314
+...    |...      |...       |...                    |...      |...     |271
 
 
 ```
@@ -204,6 +204,9 @@ gene_id|gene_name|snp_id    |variation              |is_in_tmh|p_in_tmh
 
                             |------------------------------------------|
                                      [gene_name]_is_in_tmh.csv
+
+                            |-----------------------|                  |-----|
+                                                      [gene_name].topo
 ```
 ## Estimated time
 

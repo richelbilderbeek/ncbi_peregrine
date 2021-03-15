@@ -252,6 +252,52 @@ create_results_file <- function(
     sum(!is.na(t_results$is_in_tmh) & is.na(t_results$p_in_tmh))
   )
 
+  # NEW
+  nrow_before <- nrow(t_results)
+
+  # Read the topology for the number of TMHs
+  topo_filenames <- stringr::str_replace(
+    string = is_in_tmh_filenames,
+    pattern = "_is_in_tmh.csv",
+    replacement = ".topo"
+  )
+  testthat::expect_equal(0, sum(!file.exists(topo_filenames)))
+  tibbles <- list()
+  for (i in seq_along(topo_filenames)) {
+    topo_filename <- topo_filenames[i]
+    t <- pureseqtmr::load_fasta_file_as_tibble(topo_filename)
+    t$n_tmh <- pureseqtmr::count_n_tmhs(t$sequence)
+    tibbles[[i]] <- dplyr::select(t, name, n_tmh)
+  }
+  t_topo <- dplyr::bind_rows(tibbles)
+
+  t_results$name <- stringr::str_match(
+    string = t_results$variation,
+    pattern = "^(.*):p\\..*$"
+  )[, 2]
+  testthat::expect_equal(nrow_before, nrow(t_results))
+
+  t_results_4 <- dplyr::left_join(
+    t_results,
+    dplyr::distinct(t_topo),
+    by = "name"
+  )
+  testthat::expect_equal(nrow_before, nrow(t_results_4))
+  testthat::expect_equal(
+    0,
+    nrow(
+      dplyr::filter(
+        dplyr::filter(t_results_4, p_in_tmh == 0.0),
+        n_tmh != 0
+      )
+    )
+  )
+  t_results <- t_results_4
+  testthat::expect_equal(nrow_before, nrow(t_results_4))
+  testthat::expect_equal(nrow_before, nrow(t_results))
+  # NEW END
+
   readr::write_csv(x = t_results, file = results_filename)
   results_filename
 }
+

@@ -51,6 +51,7 @@ test_that("use", {
   t_results <- read_results_file(results_filename)
 
   # All variations are unique
-  expect_equal(length(t_results), length(dplyr::distinct(t_results)))
+  expect_equal(nrow(t_results), nrow(dplyr::distinct(t_results)))
+  expect_equal(nrow(t_results), 60931)
 
 })
