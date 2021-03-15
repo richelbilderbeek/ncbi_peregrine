@@ -269,7 +269,7 @@ create_results_file <- function(
   t_topo <- dplyr::bind_rows(tibbles)
 
   t_results_3$name <- stringr::str_match(
-    string = t_results$variation,
+    string = t_results_3$variation,
     pattern = "^(.*):p\\..*$"
   )[, 2]
 

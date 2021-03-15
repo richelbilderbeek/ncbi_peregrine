@@ -53,5 +53,4 @@ test_that("use", {
   # All variations are unique
   expect_equal(nrow(t_results), nrow(dplyr::distinct(t_results)))
   expect_equal(nrow(t_results), 60931)
-
 })
