@@ -6,6 +6,7 @@ test_that("use", {
     "extdata",
     c(
       "gene_names.csv",
+      "1956.topo", "7124.topo", "348.topo",
       "1956_snps.csv", "7124_snps.csv", "348_snps.csv",
       "1956_variations.csv", "7124_variations.csv", "348_variations.csv",
       "1956_is_in_tmh.csv", "7124_is_in_tmh.csv", "348_is_in_tmh.csv"
