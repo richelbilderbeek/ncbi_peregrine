@@ -4,6 +4,8 @@
 create_results_file <- function(
   is_in_tmh_filenames
 ) {
+  name <- n_tmh <- p_in_tmh <- NULL # nolint to remove 'no visible for global variable'
+
   # Filenames
   # All folder names must be the same
   testthat::expect_equal(length(unique(dirname(is_in_tmh_filenames))), 1)
@@ -291,4 +293,3 @@ create_results_file <- function(
   readr::write_csv(x = t_results_4, file = results_filename)
   results_filename
 }
-
