@@ -31,6 +31,7 @@ jobs:
           remotes::install_github("richelbilderbeek/pureseqtmr")
           remotes::install_github("richelbilderbeek/sprentrez")
           remotes::install_github("richelbilderbeek/ncbi")
+          remotes::install_github("richelbilderbeek/ncbi_peregrine")
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("rcmdcheck")
           remotes::install_cran("covr")
