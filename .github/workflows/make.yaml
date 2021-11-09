@@ -39,5 +39,5 @@ jobs:
         shell: Rscript {0}
 
       - name: Make
-        run: make
+        run: cd scripts; make
 
