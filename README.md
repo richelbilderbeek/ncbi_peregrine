@@ -10,6 +10,8 @@ Branch   |[GitHub Actions](https://github.com/richelbilderbeek/ncbi_peregrine/ac
 `master` |![make](https://github.com/richelbilderbeek/ncbi_peregrine/workflows/make/badge.svg?branch=master) 
 `develop`|![make](https://github.com/richelbilderbeek/ncbi_peregrine/workflows/make/badge.svg?branch=develop)
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5809128.svg)](https://doi.org/10.5281/zenodo.5809128)
+
 Experiment
 
   1. Collect 1123 membrane proteins' gene IDs
