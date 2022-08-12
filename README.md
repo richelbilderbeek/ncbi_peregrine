@@ -10,7 +10,7 @@ Branch   |[GitHub Actions](https://github.com/richelbilderbeek/ncbi_peregrine/ac
 `master` |![make](https://github.com/richelbilderbeek/ncbi_peregrine/workflows/make/badge.svg?branch=master) 
 `develop`|![make](https://github.com/richelbilderbeek/ncbi_peregrine/workflows/make/badge.svg?branch=develop)
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5809128.svg)](https://doi.org/10.5281/zenodo.5809128)
+NCBI results, part of the code of [Bilderbeek, Richèl JC, et al. "Transmembrane Helices Are an Over-Presented and Evolutionarily Conserved Source of Major Histocompatibility Complex Class I and II Epitopes." Frontiers in immunology 12 (2021)](https://github.com/richelbilderbeek/bbbq_article).
 
 Experiment
 
