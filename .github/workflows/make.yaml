@@ -35,6 +35,7 @@ jobs:
           remotes::install_cran("lintr")
           remotes::install_github("jtextor/epitope-prediction")
           remotes::install_github("richelbilderbeek/pureseqtmr")
+          remotes::install_github("richelbilderbeek/ncbi_peregrine")
         shell: Rscript {0}
 
       - name: Install PureseqTM
