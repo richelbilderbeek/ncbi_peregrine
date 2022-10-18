@@ -7,7 +7,7 @@ gene_names.csv: gene_ids.csv
 	Rscript create_gene_names.R
 
 create_gene_name_snps_files_is_done.txt: gene_names.csv
-	Rscript -e 'sleep(10)'
+	sleep 10
 	Rscript create_gene_name_snps_files.R
 
 create_snp_variations_rds_is_done.txt: create_gene_name_snps_files_is_done.txt
